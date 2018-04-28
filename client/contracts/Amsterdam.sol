@@ -1,73 +1,109 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
-import "./ownable.sol";
+contract ownable {
+    address owner;
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+    function ownable() public {
+        owner = msg.sender;
+    }
+}
 
-contract Amersterdam is ownable {
+contract Amsterdam is ownable {
 
   // custom types
   struct Entry {
     uint id;
     uint unlockTime;
     address owner;
-    string key;
     string ipfs;
-    string decrip;
+    string title;
+    string descrip;
   }
-
-  Entry thisEntry;
-
+  
+  struct PK {
+      uint id;
+      string key;
+  }
 
   // state variables
   mapping (uint => Entry) public entries;
+  mapping (uint => PK) private privateKeys;
   uint counter;
 
-  constructor(uint _unlockTime, string key, string _ipfs, string _description) {
-     thisEntry.unlockTime = _unlockTime;
-     thisEntry.key = _key;
-     thisEntry.ipfs = _ipfs;
-     thisEntry.descrip = _description;
-
+  // Event declaration
+  event EvtRelease(
+    address indexed _owner,
+    string _key,
+    string _ipfs
+    );
+    
+  function Amsterdam() public {
   }
 
-
   // add an entry to the blockchain
-  function appendEntry() public {
+  function appendEntry(uint _unlockTime, string _ipfs, string _title, string _description, string _file) public {
     // a new entry
     counter++;
 
-    // adding info to constructor
-    thisEntry.id = counter;
-    thisEntry.owner = msg.sender;
-
-
-    // store this entry
-    entries[counter] = thisEntry;
-
-    // lock it
-    lock(thisEntry.unlockTime);
-
+    // adding info to Entry struct
+    entries[counter] = Entry(
+        counter,
+        _unlockTime,
+        msg.sender,
+        _ipfs,
+        _title,
+        _description
+        );
+        
+        
+    // encrypt the file and return the private key 
+   encryptEntry(counter, _file);
+   
   }
-
-if (entries[msg.sender].unlockTime <= now) {
-    function release() {
-        entries[].key;
+  
+  function encryptEntry(uint _id, string _file) private {
+      // magic
+      privateKeys[_id] = PK(
+          _id,
+          "private key"
+          );
     }
-}
-
-
-// some getter functions
-function getDescrip() constant returns (uint x) {
-    return entries[msg.sender].descrip;
+  
+  function release(uint _id) public {
+    // check if it is time to release
+    require(now >= entries[_id].unlockTime);
+    // trigger an event
+    EvtRelease(entries[_id].owner, privateKeys[_id].key, entries[_id].ipfs);
   }
 
-function getCountDown() constant returns (uint x) {
-  return entries[msg.sender].unlockTime;
-  }
-
-function getNow() constant returns (uint x) {
-    return now;
+  function eventTest(uint _id) public {
+    EvtRelease(entries[_id].owner, privateKeys[_id].key, entries[_id].ipfs);
   }
 
 
+  // some getter functions
+  
+  function getIPFS(uint _id) constant public returns (string x) {
+      return entries[_id].ipfs;
+  }
+  
+  function getTotalEnteries() public view returns (uint x){
+      return counter;
+  }
+  
+  function getDescrip(uint _id) constant public returns (string x) {
+    return entries[_id].descrip;
+  }
+  
+  function getTitle(uint _id) constant public returns (string x) {
+      return entries[_id].title;
+  }
+
+  function getUnlockTime(uint _id) constant public returns(uint x) {
+      return entries[_id].unlockTime;
+  }
 
 }
