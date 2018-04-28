@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import FileUpload from '@material-ui/icons/FileUpload';
-import { withStyles } from 'material-ui/styles';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -13,9 +12,15 @@ import Dialog, {
 import './form.scss';
 
 class Form extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false
+    }
+    // this.fileUpload = this.fileUpload.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -24,6 +29,24 @@ class Form extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  // fileUpload(file){
+  //   const url = 'http://example.com/file-upload';
+  //   const formData = new FormData();
+  //   formData.append('file',file)
+  //   const config = {
+  //       headers: {
+  //           'content-type': 'multipart/form-data'
+  //       }
+  //   }
+  //   return  post(url, formData,config)
+  // }
+
+  onChange(e) {
+    this.setState({file:e.target.files[0]});
+
+    console.log(e.target.files[0]);
+  }
 
   render() {
     const { fullScreen } = this.props;
@@ -46,7 +69,7 @@ class Form extends React.Component {
               Let Google help apps determine location. This means sending anonymous location data to
               Google, even when no apps are running.
             </DialogContentText>
-            <input type="file" id="myFile"/>
+            <input type="file" id="myFile" onChange={this.onChange}/>
 
           </DialogContent>
           <DialogActions>
