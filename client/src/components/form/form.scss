@@ -1,3 +1,13 @@
 .upload-btn {
     border-radius: 18px !important;
 }
+.input-group {
+    display: flex;
+    align-items: center;
+}
+.form-body {
+    width: 100%;
+}
+.input-group > div {
+    width: 100% !important;
+}
