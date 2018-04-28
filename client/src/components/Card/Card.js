@@ -49,6 +49,9 @@ function SimpleCard(props) {
         <CardActions>
           <Button size="small">{props.countdown}</Button>
         </CardActions>
+       <Button variant="raised" component="span" className={classes.button}>
+         Upload
+       </Button> 
       </Card>
     </div>
   );
