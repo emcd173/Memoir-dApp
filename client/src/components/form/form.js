@@ -32,7 +32,8 @@ const styles = theme => ({
   }
 });
 
-const ipfsApi = window.IpfsApi("localhost","5100");
+const ipfsApi = window.IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'})
+
 
 class Form extends React.Component {
   constructor(props) {

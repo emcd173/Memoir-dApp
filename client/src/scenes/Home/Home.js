@@ -54,7 +54,7 @@ class Home extends Component {
          // Load and show all Entries 
          this.loadAllEntries()
          this.listenToAppendEntryEvent();
-        //  this.newEntry();
+         this.newEntry();
       }).catch((error) => {
         console.log(error);
       });
