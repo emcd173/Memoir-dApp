@@ -32,10 +32,13 @@ const styles = theme => ({
   }
 });
 
+const ipfsApi = window.IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'})
+
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
-
+console.log("test")
     this.state = {
       open: false,
       title: "",
@@ -43,20 +46,39 @@ class Form extends React.Component {
       category: "",
       author: ""
     }
-    this.onChange = this.onChange.bind(this);
+    // bind methods
+    this.captureFile = this.captureFile.bind(this)
+    this.saveToIpfs = this.saveToIpfs.bind(this)
+  }
+
+  captureFile (event) {
+    event.stopPropagation()
+    event.preventDefault()
+    const file = event.target.files[0]
+    let reader = new window.FileReader()
+    reader.onloadend = () => this.saveToIpfs(reader)
+    reader.readAsArrayBuffer(file);
+  }
+
+  saveToIpfs (reader) {
+    let ipfsId
+    const buffer = Buffer.from(reader.result);
+    console.log(buffer);
+    ipfsApi.add(buffer, { progress: (prog) => console.log(`received: ${prog}`) })
+      .then((response) => {
+        console.log(response)
+        ipfsId = response[0].hash
+        console.log(ipfsId)
+        this.setState({added_file_hash: ipfsId})
+      }).catch((err) => {
+        console.error(err)
+      })
   }
 
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  onChange(e) {
-    this.setState({file:e.target.files[0]});
-  }
 
   handleChange = name => event => {
     this.setState({
@@ -65,7 +87,6 @@ class Form extends React.Component {
   };
 
   render() {
-    const { fullScreen } = this.props;
 
     return (
       <div>
@@ -74,7 +95,6 @@ class Form extends React.Component {
           <FileUpload />
         </Button>
           <Dialog
-            fullScreen={fullScreen}
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="responsive-dialog-title"
@@ -111,7 +131,7 @@ class Form extends React.Component {
                     />
                   </div>
                 </div>
-                {/* <input type="file" id="myFile" onChange={this.onChange}/> */}
+                <input type="file" id="myFile" onChange={this.captureFile}/>
               </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleClose} color="primary">
@@ -129,8 +149,7 @@ class Form extends React.Component {
 }
 
 Form.propTypes = {
-  classes: PropTypes.object.isRequired,
-  fullScreen: PropTypes.bool.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Form);
