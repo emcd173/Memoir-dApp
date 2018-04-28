@@ -63,9 +63,9 @@ contract Amsterdam is ownable {
 
   function encrypt(uint _id, uint[] _message, uint _rand) private returns(uint[]) {
         uint[] memory mssg = _message;
-         const len;
+        uint len;
         len = mssg.length;
-        uint[] memory enc_msg = new uint[len];
+        uint[] memory enc_msg = new uint[](len);
         p = [len];
 
         for (uint i = 0; i < len; i++) {
@@ -107,9 +107,9 @@ contract Amsterdam is ownable {
       }
 
   function decrypt(uint _id) private returns(uint[]){
-    const len;
+    uint len;
     len = entries[_id].enc_msg.length;
-    uint[] memory dec_msg = new uint[len];
+    uint[] memory dec_msg = new uint[](len);
           for (uint i = 0; i < len; i++) {
               if ((entries[_id].enc_msg[i] - entries[_id].p[i]) < 0)
                   dec_msg[i] =  entries[_id].enc_msg[i] - entries[_id].p[i] + 26;
