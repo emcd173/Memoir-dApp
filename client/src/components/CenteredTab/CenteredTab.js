@@ -13,13 +13,45 @@ const styles = {
 };
 
 class CenteredTabs extends React.Component {
-  state = {
-    value: 0,
-  };
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        value: 0,
+        filteredEntryResults: this.props.entryResults.filter(entry => entry.unlockTime < Date.now()),
+      };
+    }
+
+    // componentWillMount(){
+    //   this.filterResults(0).then((filteredResults) => {
+    //     this.setState({
+    //       filteredEntryResults: filteredResults,
+    //     });
+    //   });
+    // }
 
   handleChange = (event, value) => {
-    this.setState({ value });
+    console.log("CHANGE: ", value);
+    this.setState({
+      value: value,
+      filteredEntryResults: this.filterResults(value),
+    });
   };
+
+  filterResults = (value) => {
+    // filter based on time
+    // 0 is released
+    // 1 is available to be release but not yet released
+    // 2 is still counting down
+    switch(value) {
+        case 2:
+            return this.props.entryResults.filter(entry => entry.unlockTime > Date.now());
+        case 1:
+            return this.props.entryResults.filter(entry => entry.unlockTime < Date.now());
+        default:
+            return this.props.entryResults.filter(entry => entry.unlockTime < Date.now());
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -39,7 +71,7 @@ class CenteredTabs extends React.Component {
           <Tab label="Upcoming" />
         </Tabs>
       </Paper>
-      <EntryList entryResults={this.props.entryResults}/>
+      <EntryList entryResults={this.state.filteredEntryResults}/>
       </div>
     );
   }

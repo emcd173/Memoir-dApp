@@ -13,6 +13,9 @@ import Header from './components/header/header';
 // Import Services
 import registerServiceWorker from './services/registerServiceWorker';
 
+//  Import Styles
+import './styles/base.scss';
+
 
 ReactDOM.render(
   <BrowserRouter>

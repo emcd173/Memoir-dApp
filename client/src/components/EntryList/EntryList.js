@@ -32,9 +32,10 @@ class entryList extends Component {
             <Card
              key={entry.id}
              title={entry.title}
+             ipfs={entry.ipfs}
+             descrip={entry.descrip}
+             unlockTime={entry.unlockTime} 
              type={entry.type}
-             description={entry.description}
-             countdown={entry.countdown} 
             />)
     });
     return (
