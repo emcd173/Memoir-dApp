@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './scenes/Home/Home';
 
 // Import Components
+import Header from '../components/header/header';
 
 // Import Services
 import registerServiceWorker from './services/registerServiceWorker';
@@ -16,11 +17,12 @@ ReactDOM.render(
   <BrowserRouter>
     <div className="container-fluid">
         <div className="App">
-           <Switch> 
-              <Route exact path='/' component={Home}/>
-              <Route path="/personal" component={Home}/>
-              <Route path="/upload" component={Home}/>
-            </Switch>
+          <Header></Header>
+          <Switch> 
+            <Route exact path='/' component={Home}/>
+            <Route path="/personal" component={Home}/>
+            <Route path="/upload" component={Home}/>
+          </Switch>
         </div>
     </div>
   </BrowserRouter>,

@@ -1,8 +1,8 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.19;
 
 import "./ownable.sol";
 
-contract Amersterdam is ownable {
+contract Amsterdam is ownable {
 
   // custom types
   struct Entry {
@@ -11,24 +11,25 @@ contract Amersterdam is ownable {
     address owner;
     string key;
     string ipfs;
-    string decrip;
+    string descrip;
   }
 
   Entry thisEntry;
 
-
   // state variables
   mapping (uint => Entry) public entries;
   uint counter;
+  bool released = false;
 
-  constructor(uint _unlockTime, string key, string _ipfs, string _description) {
-     thisEntry.unlockTime = _unlockTime;
+  // Event declaration
+  event EvtRelease(address indexed _owner, string indexed _key, string indexed _ipfs);
+
+  function Amsterdam(uint _unlockTime, string _key, string _ipfs, string _description) public {
+     thisEntry.unlockTime = now + _unlockTime;
      thisEntry.key = _key;
      thisEntry.ipfs = _ipfs;
      thisEntry.descrip = _description;
-
   }
-
 
   // add an entry to the blockchain
   function appendEntry() public {
@@ -39,35 +40,41 @@ contract Amersterdam is ownable {
     thisEntry.id = counter;
     thisEntry.owner = msg.sender;
 
-
     // store this entry
     entries[counter] = thisEntry;
-
-    // lock it
-    lock(thisEntry.unlockTime);
-
   }
 
-if (entries[msg.sender].unlockTime <= now) {
-    function release() {
-        entries[].key;
+
+  function release(uint _id) public {
+    // check if it is time to release
+    require(now >= entries[_id].unlockTime);
+    // the function has already been called
+    require(!released);
+
+    // now change value
+    released = true;
+    // trigger an event
+    EvtRelease(entries[_id].owner, entries[_id].key, entries[_id].ipfs);
+  }
+
+  // some getter functions
+  function getDescrip(uint _id) constant public returns (string x) {
+    return entries[_id].descrip;
+  }
+
+  function getCountDown(uint _id) constant public returns (uint x) {
+    if (entries[_id].unlockTime > now) {
+        return (entries[_id].unlockTime - now);
+    } else {
+        return 0;
     }
-}
-
-
-// some getter functions
-function getDescrip() constant returns (uint x) {
-    return entries[msg.sender].descrip;
   }
 
-function getCountDown() constant returns (uint x) {
-  return entries[msg.sender].unlockTime;
-  }
-
-function getNow() constant returns (uint x) {
+  function getNow() constant public returns (uint x) {
     return now;
   }
 
-
-
+  function getUnlockTime(uint _id) constant public returns(uint x) {
+      return entries[_id].unlockTime;
+  }
 }
