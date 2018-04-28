@@ -52,7 +52,7 @@ class Home extends Component {
              totalEntries: result.toNumber(),
          }); 
          // Load and show all Entries 
-         this.loadAllEntries()
+         this.loadAllEntries();
          this.listenToAppendEntryEvent();
          this.newEntry();
       }).catch((error) => {
@@ -106,13 +106,16 @@ class Home extends Component {
     this.setState({
         formSubmitted: true
     });
+
     // Get accounts.
     this.state.amsterdamContractInstance.appendEntry(
       5555,
-      "unlockTime",
-      "ipfs",
-      "title",
-      "descrip",
+      "unlockTime", // unlock time
+      "ipfs", // title
+      "description", // description
+      1, //uint _entryType
+      [1,2], //uint[] _file
+      1, // uint _rand,
       {
           from: this.state.account, 
       }
