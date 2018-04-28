@@ -26,23 +26,11 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      entryResults: [
-      {
-        id: 1, 
-        title: "Title",
-        description: "This is the description",
-        type: "type",
-        countdown: "5 minutes",
-      },
-      {
-        id: 2,
-        title: "Title",
-        description: "This is the description",
-        type: "type",
-        countdown: "5 minutes",
-      }],
+      entryResults: [],
     };
+  };
 
+  componentWillMount() {
     getWeb3Service().then(() => {
       console.log("Got web3");
       this.setState({
@@ -50,11 +38,12 @@ class Home extends Component {
        amsterdamContractInstance: getAmsterdamContractInstance(),
       });
 
+      var instance = getAmsterdamContractInstance();
+
       getCurrentAccount().then( (accountResult) => {
        this.setState({
          account: accountResult,
        })
-       this.newEntry();
       })
 
       this.state.amsterdamContractInstance.getTotalEnteries.call().then((result) => {
@@ -63,8 +52,9 @@ class Home extends Component {
              totalEntries: result.toNumber(),
          }); 
          // Load and show all Entries 
-         this.loadAllentries()
-         this.listenToAppentEntryEvent();
+         this.loadAllEntries()
+         this.listenToAppendEntryEvent();
+         this.newEntry();
       }).catch((error) => {
         console.log(error);
       });
@@ -73,7 +63,7 @@ class Home extends Component {
 
   // We want to load all Entries. Currently no backend function that returns all entry ids for all Entries on blockchain
   // ASSUMPTION for this function: there will always be a entry for every ID in 1...n; n = total number of Entries
-  loadAllentries(){
+  loadAllEntries(){
       var entryObjects = [];
       var idsProcessed = 0;
 
@@ -84,7 +74,7 @@ class Home extends Component {
 
       // Loop through each ID, get that entry from backend, save info in readable format on front-end, add each entry info to entryObjects array
       entryIdList.forEach( (entryId, index) => {
-          this.state.getAmsterdamContractInstance.Entries(entryId).then((entry) => {
+          this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
               console.log("Entry: ", entry)
               idsProcessed++;
               var entryData = {
@@ -94,6 +84,7 @@ class Home extends Component {
                 "ipfs" : entry[3],
                 "title" : entry[4],
                 "descrip" : entry[5],
+                "type": "SAMPLE",
               };
               entryObjects.push(entryData);
               // If we have looped through all Entries, set state
@@ -140,16 +131,16 @@ class Home extends Component {
   }
 
   // Listen for events raised from the contract
-  listenToAppentEntryEvent() {
+  listenToAppendEntryEvent() {
       this.state.amsterdamContractInstance.EvtEntryAppended({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
           // This is called after metamask initiates transaction
           // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
         if (event['transactionHash'] === this.state.transactionHash){
           console.log("Event: ", event);
-          this.loadAllentries()
           this.setState({
               waitingConfirmation: false
           });
+          this.loadAllEntries()
         }
       })
   }

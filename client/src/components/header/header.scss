@@ -4,6 +4,15 @@
     align-items: center !important;
     width: 100%;
     background-color: $secondary-dark !important;
+
+    .profile:hover{
+        transition: color 0.5s ease;
+        color: $primary-light;
+    }
+    .logoTitle:hover{
+        transition: color 0.5s ease;
+        color: $primary-light;
+    }
 }
     
 .header-sub {

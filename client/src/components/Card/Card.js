@@ -31,7 +31,7 @@ function SimpleCard(props) {
       <Card className={classes.card}>
         <CardContent>
           <Typography className={classes.title} color="textSecondary">
-            entry Item
+            {props.owner}
           </Typography>
           <Typography variant="headline" component="h2">
             {props.title}
@@ -40,7 +40,10 @@ function SimpleCard(props) {
             {props.type}
           </Typography>
           <Typography component="p">
-            {props.description}
+            {props.desc}
+          </Typography>
+          <Typography component="p">
+            {props.ipfs}
           </Typography>
         </CardContent>
         <CardActions>

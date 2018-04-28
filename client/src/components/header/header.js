@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import "./header.scss";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Form from '../form/form';
+import { Link } from 'react-router-dom';
 
 const styles = {
   root: {
@@ -26,12 +27,18 @@ class Header extends React.Component {
             <div className={this.props.classes.root}>
             <AppBar className="header">
               <Toolbar className="header-sub">
-                <Typography variant="title" color="inherit">
-                  Memoir
-                </Typography>
+                <Link to="/">
+                  <Typography variant="title" color="inherit">
+                    <div className="logoTitle">
+                        MEMOIR
+                    </div>
+                  </Typography>
+                </Link>
                 <div className="header-right">
                     <div className="profile">
+                      <Link to="/personal">
                         <AccountCircle className={this.props.classes.accountIcon}/>
+                      </Link>
                     </div>
                     <div className="upload">
                         <Form></Form>
