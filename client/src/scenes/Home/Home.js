@@ -46,7 +46,7 @@ class Home extends Component {
        })
       })
 
-      this.state.amsterdamContractInstance.getTotalEnteries.call().then((result) => {
+      this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
          console.log("Total Number of Entries: ", result.toNumber() );
          this.setState({
              totalEntries: result.toNumber(),
@@ -54,7 +54,7 @@ class Home extends Component {
          // Load and show all Entries 
          this.loadAllEntries()
          this.listenToAppendEntryEvent();
-         this.newEntry();
+        //  this.newEntry();
       }).catch((error) => {
         console.log(error);
       });
@@ -132,7 +132,7 @@ class Home extends Component {
 
   // Listen for events raised from the contract
   listenToAppendEntryEvent() {
-      this.state.amsterdamContractInstance.EvtEntryAppended({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
+      this.state.amsterdamContractInstance.EventEncMsg({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
           // This is called after metamask initiates transaction
           // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
         if (event['transactionHash'] === this.state.transactionHash){
