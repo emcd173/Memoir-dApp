@@ -4,10 +4,9 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import FileUpload from '@material-ui/icons/FileUpload';
 import "./header.scss";
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Form from '../form/form';
 
 const styles = {
   root: {
@@ -39,10 +38,7 @@ class Header extends React.Component {
                         <AccountCircle className={this.props.classes.accountIcon}/>
                     </div>
                     <div className="upload">
-                        <Button className={this.props.classes.button} variant="raised" color="default">
-                            Upload
-                            <FileUpload className={this.props.classes.rightIcon} />
-                        </Button>
+                        <Form></Form>
                     </div>
                 </div>
               </Toolbar>
