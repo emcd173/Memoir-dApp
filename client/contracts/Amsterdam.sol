@@ -22,7 +22,16 @@ contract Amsterdam is ownable {
   bool released = false;
 
   // Event declaration
-  event EvtRelease(address indexed _owner, string indexed _key, string indexed _ipfs);
+  event EvtRelease(
+    address indexed _owner,
+    string indexed _key,
+    string indexed _ipfs
+    );
+
+    // Event declaration
+    event EvtRelease2(
+      address _owner
+      );
 
   function Amsterdam(uint _unlockTime, string _key, string _ipfs, string _description) public {
      thisEntry.unlockTime = now + _unlockTime;
@@ -42,18 +51,36 @@ contract Amsterdam is ownable {
 
     // store this entry
     entries[counter] = thisEntry;
+
+    check();
+    //release(thisEntry.id);
+    EvtRelease2(entries[thisEntry.id].owner);
+  }
+
+  function check() internal view {
+    while(now <= entries[thisEntry.id].unlockTime) {
+      //do nothing
+    }
   }
 
 
   function release(uint _id) public {
     // check if it is time to release
-    require(now >= entries[_id].unlockTime);
+    //while(now <= entries[_id].unlockTime) {
+      //do nothing
+    //}
+
+    //require(now >= entries[_id].unlockTime);
     // the function has already been called
-    require(!released);
+    //require(!released);
 
     // now change value
-    released = true;
+    //released = true;
     // trigger an event
+    EvtRelease(entries[_id].owner, entries[_id].key, entries[_id].ipfs);
+  }
+
+  function eventTest(uint _id) public {
     EvtRelease(entries[_id].owner, entries[_id].key, entries[_id].ipfs);
   }
 
@@ -77,4 +104,5 @@ contract Amsterdam is ownable {
   function getUnlockTime(uint _id) constant public returns(uint x) {
       return entries[_id].unlockTime;
   }
+
 }
