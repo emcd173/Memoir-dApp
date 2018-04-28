@@ -1,5 +1,16 @@
 pragma solidity ^0.4.19;
 
+contract ownable {
+    address owner;
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+    function ownable() public {
+        owner = msg.sender;
+    }
+}
+
 contract Amsterdam is ownable {
 
   // custom types
@@ -9,7 +20,7 @@ contract Amsterdam is ownable {
     address owner;
     string ipfs;
     string title;
-    string description;
+    string descrip;
   }
   
   struct PK {
@@ -19,7 +30,7 @@ contract Amsterdam is ownable {
 
   // state variables
   mapping (uint => Entry) public entries;
-  mapping (string => PK) private privateKeys;
+  mapping (uint => PK) private privateKeys;
   uint counter;
 
   // Event declaration
@@ -46,38 +57,36 @@ contract Amsterdam is ownable {
         _title,
         _description
         );
-        ]
+        
         
     // encrypt the file and return the private key 
-   encryptEntry(_file);
+   encryptEntry(counter, _file);
    
-    // adding info to PK struct
-    privateKeys[counter] = PK(
-        counter,
-        pk
-    );
   }
   
-  function encryptEntry(string _file) private returns(string x) {
-      ***magic***
-      return pk;
-  }
+  function encryptEntry(uint _id, string _file) private {
+      // magic
+      privateKeys[_id] = PK(
+          _id,
+          "private key"
+          );
+    }
   
   function release(uint _id) public {
     // check if it is time to release
-    require(now >= entries[thisEntry.id].unlockTime)
+    require(now >= entries[_id].unlockTime);
     // trigger an event
     EvtRelease(entries[_id].owner, privateKeys[_id].key, entries[_id].ipfs);
   }
 
   function eventTest(uint _id) public {
-    EvtRelease(entries[_id].owner, entries[_id].key, entries[_id].ipfs);
+    EvtRelease(entries[_id].owner, privateKeys[_id].key, entries[_id].ipfs);
   }
 
 
   // some getter functions
   
-  function getIPFS(uint _id) constant public returns (uint x) {
+  function getIPFS(uint _id) constant public returns (string x) {
       return entries[_id].ipfs;
   }
   
