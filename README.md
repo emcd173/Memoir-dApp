@@ -19,10 +19,7 @@ A visual diagram outling the process may be seen below
 ## Scenario
 
 We envsion a wide array of use cases for Memoir, for example:
-1. Personal Writings - An individual may wish to conceal their writing (such as a novel, diary, personal letter) from political threats, estranged lovers, etc - while still proving that they wrote it during a given period in time.  For example, a political refugee deprived of free speech (like the late Anne Frank, of whom our Smart) may wish to detail their wartime experience while deflecting risk associated speaking out against an authority.  
-2. Music
-3. Cryptowills
-4. Treasure Map
-5. Time capsule messages (messages to future self)
-6. Any secret (cryptographic or otherwise)
-7. Any high-risk confession or accusation
+1. Personal Writings - An individual may wish to conceal their writing (such as a novel, diary, personal letter) from political threats, estranged lovers, etc - while still proving that they wrote it during a given period in time.  For example, a political refugee deprived of free speech (like the late Anne Frank, of whom our Smart-Contract, Amsterdam is dedicated) may wish to detail their wartime experience while deflecting risk associated speaking out against an authority.  
+2. Music - An musician, at the peak of their notereiety, might wish to lock up a song for a 100 years - so that it is not released to the public unti after their death.  Imagine if a song from Beethoven, the Beatles, or Biggie was timelocked through history and released today.
+3. Cryptowills - An individual may wish to timelock a private key connected to a bitcoin wallet for a given period of time, so that the funds are not released to the public until a given point in the future.
+4. Messages to future self - Memoir provides a secure and trustless way for indviduals to send messages to their future selves.  A college freshman, for example, may wish to send a digital message to his self upon graduation.  this protocol ensures that the message will not be lost, destroyed, etc.
