@@ -38,7 +38,11 @@ contract Amsterdam is ownable {
     address indexed _owner,
     string _key,
     string _ipfs
-    );
+  );
+
+  event EvtEntryAppended(
+    uint indexed id
+  );
     
   function Amsterdam() public {
   }
@@ -58,9 +62,10 @@ contract Amsterdam is ownable {
         _description
         );
         
-        
     // encrypt the file and return the private key 
    encryptEntry(counter, _file);
+
+   EvtEntryAppended(counter);
    
   }
   
