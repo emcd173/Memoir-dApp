@@ -289,9 +289,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
               <DialogTitle id="responsive-dialog-title">{"Make your memoir"}</DialogTitle>
               <DialogContent className={this.props.classes.form}>
                 <DialogContentText>
-                <blockquote>“Always carry a notebook. And I mean always. 
-                  The short-term memory only retains information for three minutes; 
-                unless it is committed to paper you can lose an idea for ever.”</blockquote> – Will Self
+                <blockquote>“Tell the truth, or someone will tell it for you.”</blockquote> ― Stephanie Klein, Straight Up and Dirty
                 </DialogContentText>
                 <div className="form-body">
                   <div className="input-group">
