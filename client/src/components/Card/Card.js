@@ -6,6 +6,8 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import AddIcon from '@material-ui/icons/Add';
 
+import './Card.scss'
+
 const styles = {
   card: {
     minWidth: 275,
@@ -112,21 +114,20 @@ class SimpleCard extends React.Component {
                   {this.props.desc}
                 </div>
                 </Typography>
-                <Typography component="p">
-                <div className="ipfs">
-                  {this.props.ipfs}
-                </div>
-                </Typography>
+
               </CardContent>
-              <CardActions>
-                {/* <Button size="small">{this.props.countdown}</Button> */}
-              </CardActions>
-             <Button variant="raised" component="span" className={classes.button}>
-               Upload
-             </Button>
-             <Button variant="fab" color="primary" aria-label="add" onClick={this.requestUnlock}className={classes.button}>
-               <AddIcon />
-             </Button>
+             <div className="bottom">
+               <Typography component="p">
+               <div className="ipfs">
+                 {this.props.ipfs}
+               </div>
+               </Typography>
+               <div className="button">
+                 <Button variant="fab" color="primary" aria-label="add" onClick={this.requestUnlock}className={classes.button}>
+                   <AddIcon />
+                 </Button>
+               </div>
+            </div>
             </Card>
       </div>
     );

@@ -9,14 +9,18 @@ By creating a decentralized time-capsule protocol that deterministically locks a
   2. <b>Enable</b> a proof-of-content creation timestamping mechanism, where the content becomes publically available on after N-period of time
   3. <b>Connect</b> encrypted, content-permanent web objects (ala IPFS) to an ethereum-driven timelock mechanism
 
-Memoir represents a unique and novel approach to timelocking secrets - of all digital types.  We built the protocol because of the social need for reliable methods to programatically enable trustless digital time-capsules.  In addition, we see real economic value in removing the costs associated with third-party custodians and eliminating the risk of them defaulting on a promise or contract.
+Memoir represents a unique and novel approach to the timelocking secrets - of all digital types.  We built the protocol after recognizing the social need for reliable methods to programatically enable trustless digital time-capsules.  
+
+In addition, we realized the potential for creating economic value by removing the costs associated with third-party custodians, the <i>elimination of risk</i> derived from the possibility of default, and the reduction in time taken to complete the process.
 
 
 ## How it works
 
-On the front-end, the user uploads a file (this can be any form of content, see below for examples) and inputs a set time period for which they'd like their file to be encrypted.  The user may also optionally input a string up to 240 charecters as a public description, etc.
+On the front-end, the user uploads a file (this can be any form of content, see below for scenario examples) and inputs a set time period for which they'd like their file to be encrypted.  The user may also optionally input a string up to 240 charecters as a public description, etc.
 
-The web3 uploader calls a private function which generates an ECDSA keypair.  They public key is emitted to the client through an event log and is used by the client uploader to encrypt the file.  The encrypted file is uploaded onto the Interplanetary File System.  The IPFS address for the encrypted file, the description string, and time-lock period are ingested as parameters into the Amsterdam.sol struct.  The private key to decrypt the file remains obfuscated for a period of time defined by the user.
+The Memoir web3 uploader then calls an internal function which generates an ECDSA keypair, storing the private key as a private variable.  The public key is emitted to the client through an event log and is used by the client uploader to encrypt the file.  The encrypted file is uploaded onto the Interplanetary File System.  
+
+The IPFS address for the encrypted file, the description string, and time-lock period are ingested as parameters into the Amsterdam.sol struct.  The private key to decrypt the file remains obfuscated within the contract for a set period of time determined by the user.
 
 The parameters taken by the Amsterdam.sol smart-contract are shown summarized below:
 
@@ -60,7 +64,7 @@ A visual diagram outling the process may be seen below:
 
 3. <i><b>Public Cryptowill</b></i> - An individual may wish to timelock a private key connected to a bitcoin wallet for a given period of time, so that the funds are not released to the public until a given point in the future.
 
-4. <i><b>Message to Future Self</b></i> - Memoir provides a secure and trustless way for indviduals to send messages to their future selves.  A college freshman, for example, may wish to send a digital message to his self upon graduation.  this protocol ensures that the message will not be lost, destroyed, etc.
+4. <i><b>Message to Future Self</b></i> - Memoir provides a secure and trustless way for indviduals to send messages to their future selves.  A college freshman, for example, may wish to send a digital message to his self upon graduation.  This protocol ensures that the message will not be lost, destroyed, etc.
 
 5. <i><b>Programmatic gaming incentives</b></i> - A gamedeveloper, looking to maximize the time-horizon for the enjoyment of a game, may wish to time-locked digital assets (possibly represented as an NFT) and programatically release them into the gaming universe over a given period of tume.  This ensures that the game incentives continue to evolve - keeping the game engaging long after the Creator has moved on.
 
@@ -76,7 +80,10 @@ Below, is an example of the experience for a user uploading a file.
 
 ![UI](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirUIGif.gif)
 
-The Memoir Web Interface divides the timecapsule listings based off of whether or not the key for the encrypted file stored on IPFS has been released.  <b>The Library</b> tab sorts all of the objects which have been released, while <b>The Vault</b> tab sorts the objects where the key is yet to be unlocked
+
+Within the web interface, Memoir divides the timecapsule listings based off of whether or not the key for the encrypted file stored on IPFS has been released.  
+
+In the interface, <b>The Library</b> tab sorts all of the objects which have been released, while <b>The Vault</b> tab sorts the objects where the key is yet to be unlocked
 
 In future iterations of this project, we envision the possibility of more advanced content curation techniques.  This might include the ability to star or follow specific creators, query based on content description, or upvote/rank locked content (possibly through a content-curated registry schema).
 
@@ -86,9 +93,11 @@ In future iterations of this project, we envision the possibility of more advanc
 
 There are some issues with storing a decryption key on a publically distributed blockchain ledger.  While the key itself exists as a private variable, annd cannot be called by other contracts, it is still recorded in bytecode on the EVM.  An attacker could theoretically attempt to brute force the blockchain dataset for the key binary, but he would have to know the exact length, as well as the IPFS address for the file (which in a future iteration will be ingested as a private variable on the smart-contract).  
 
-Thus, in this beta build, we assume that there exists a deterring level of economic infeasability (resulting from computational work) in deriving both the key and address from the bytecode.
+Thus, in this beta build, we assume that there exists a deterring level of economic infeasability (resulting from a computational work threshold) in deriving both the key and address from the EVM bytecode.
 
-Importantly, we are also considering implementing alternative approaches to key storage in future builds.  For instance, leveraging private channels in Quorum v2.0.2 - or by leveraging Trusted Execution Environments (TEE's) like Intel SGX through Microsoft's open-sourced Coco Framework ([Link.](https://github.com/azure/coco-framework)).  
+Importantly, we are also considering implementing alternative approaches to key storage in future builds.  For instance, we would like to xpplore the possibillity of security gains derivied from implementing a Diffie-Hellman key exhange mechanism or a rotating key tumble algorithm.  
+
+Ultimately, we found that there would be tangible benefits in implementing private channels in Quorum v2.0.2 - or by leveraging Trusted Execution Environments (TEE's) like Intel SGX through Microsoft's open-sourced Coco Framework ([Link.](https://github.com/azure/coco-framework)).  
 
 
 
@@ -112,6 +121,8 @@ A visual diagram outling this first iteration was envisioned as below:
 
 Memoir is our submission to Hackital.io, a DC-area blockchain hackathon sponsored by Consensys, OpenDAO, Soylent, and others.  We'd like to give a special thanks to all of the organizers and participants for making this event possible.
 
-To access the application, visit the url, here: [Memoir dApp](http://memoir-time-capsule.s3-website-us-east-1.amazonaws.com/)
+<b>Memoir</b> is a web3 dApp that enables content creators to timelock their creations for a predetermined period of time, in a manner similiar to a time-capsule.
+
+* To access the application, visit the url, here: [Memoir dApp](http://memoir-time-capsule.s3-website-us-east-1.amazonaws.com/)
 
 We invite you to audit our code, provide comments, and extend Memoir's functionality.  Enjoy!

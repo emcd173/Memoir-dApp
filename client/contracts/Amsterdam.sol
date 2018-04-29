@@ -17,15 +17,21 @@ contract Amsterdam is ownable {
     bool isReleased;
   }
 
-//seperate struct for obfuscated key storage
   struct PK {
     uint id;
     uint priv_key;
 }
 
+  struct Temp {
+    uint id;
+    uint pubKey;
+    uint privKey;
+  }
+
 // state variables
 mapping (uint => Entry) public entries;
 mapping (uint => PK) private privateKeys;
+mapping (uint => Temp) private temperary;
 uint counter;
 uint[] primes;
 
@@ -36,14 +42,36 @@ event EvtRelease(
   string _ipfs
   );
 
-event EventEncMsg(
-  uint[] _enc_msg
+event EventPubKey(
+  uint _pubkey
   );
 
-event EventDecMsg(
-  uint[] _dec_msg
+event EventEnty(
+  string title,
+  uint id
   );
 
+function getKeyPair() public returns(uint[]) {
+  // generate psdeudo random large primes
+  uint p;
+  uint q;
+  p = genPrimes()[0];
+  q = genPrimes()[1];
+
+  //delcare variable
+  uint[] memory returnValues = new uint[](2);
+  uint pubKey;
+  uint privKey;
+  pubKey = generateKeyPair(p, q)[0];
+  privKey = generateKeyPair(p, q)[1];
+  counter++;
+  temperary[counter] = Temp(
+    counter,
+    pubKey,
+    privKey
+    );
+  EventPubKey(returnValues[0]);
+}
 
   function Amsterdam(uint[] _primes) public {
     primes = _primes;
@@ -53,11 +81,7 @@ event EventDecMsg(
 function appendEntry(uint _unlockTime, string _ipfs, string _title, string _description, uint _entryType) public {
   // a new entry
   counter++;
-  // generate psdeudo random large primes
-  uint p;
-  uint q;
-  p = genPrimes()[0];
-  q = genPrimes()[1];
+
 
  // adding info to Entry struct
  entries[counter] = Entry(
@@ -68,14 +92,16 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
      _title,
      _description,
      _entryType,
-     generateKeyPair(p, q)[0],
+     temperary[counter].pubKey,
      false
      );
 
   privateKeys[counter] = PK(
     counter,
-    generateKeyPair(p, q)[1]
+    temperary[counter].privKey
     );
+
+    EventEnty(_title, counter);
 }
 
   function generateKeyPair(uint _p, uint _q) public returns(uint[]) {
@@ -165,7 +191,7 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
 
   }
 
-  function egcd(uint a, uint b) public returns(uint[]) {
+  function egcd(uint a, uint b) public constant returns(uint[]) {
     uint g;
     uint y;
     uint x;
@@ -177,28 +203,60 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
       returnValues[2] = 1;
       return(returnValues);
     } else {
-      g = egcd(b % a, a)[1];
-      y = egcd(b % a, a)[2];
-      x = egcd(b % a, a)[3];
-      calc = x - (b / a) * y;
+      uint mod;
+      mod = b % a;
+      g = egcd(mod, a)[0];
+      x = egcd(mod, a)[1];
+      y = egcd(mod, a)[2];
+      calc = (y - div(b,a) * x);
       returnValues[0] = g;
       returnValues[1] = calc;
-      returnValues[2] = y;
+      returnValues[2] = x;
       return(returnValues);
     }
   }
 
-  function modinv(uint a, uint m) public returns(uint) {
+  function modinv(uint a, uint m) public constant returns(uint) {
     uint g;
     uint x;
     uint y;
     uint temp;
-    g = egcd(a,m)[1];
-    x = egcd(a,m)[2];
-    y = egcd(a,m)[3];
-    temp = x % m;
-    return(temp);
+    g = egcd(a,m)[0];
+    x = egcd(a,m)[1];
+    y = egcd(a,m)[2];
+    if (g == 1)
+      temp = x % m;
+      return(temp);
   }
+
+  /* function div(uint256 a, uint256 b) public returns (uint256[]) {
+    uint256 a2;
+    uint256[] memory returnValues = new uint256[](2);
+    returnValues[0] = a;
+    uint256 c = a / b;
+    a2 = b * c - a % b;
+    returnValues[1] = a2;
+    return(returnValues);
+  } */
+
+  function div(uint256 n, uint256 d) public returns(uint) {
+    if (n < d) {
+      return(0);
+    } else (n >= d); {
+      uint diff;
+      diff = n-d;
+      return(div(diff, d) + 1);
+    }
+  }
+
+  /* def quotient( n , d ):
+
+    if (0<=n<d):
+        return 0
+    if (n >= d):
+        return quotient(n - d, d) + 1
+    if n<0:
+        return quotient(n + d, d) - 1 */
 
   // some getter functions
 
@@ -221,6 +279,7 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
   function getUnlockTime(uint _id) constant public returns(uint x) {
       return entries[_id].unlockTime;
   }
+
 
 
 }
