@@ -9,7 +9,7 @@ By creating a decentralized time-capsule protocol that deterministically locks a
   2. <b>Enable</b> a proof-of-content creation timestamping mechanism, where the content becomes publically available on after N-period of time
   3. <b>Connect</b> encrypted, content-permanent web objects (ala IPFS) to an ethereum-driven timelock mechanism
 
-Memoir is a novel approach to timelocking secrets of any type.  We built the protocol because of the social need for reliable digital timelocked obfuscation and preservation technique.  We see real economic value in removing the costs associated with third-party custodians and the risk of them defaulting on a promise or contract.
+Memoir represents a unique and novel approach to timelocking secrets - of all digital types.  We built the protocol because of the social need for reliable methods to programatically enable trustless digital time-capsules.  In addition, we see real economic value in removing the costs associated with third-party custodians and eliminating the risk of them defaulting on a promise or contract.
 
 
 ## How it works
@@ -40,12 +40,15 @@ struct PK {
   }
 
 ```
-<i>To audit the Amsterdam.sol smart-contract, [look here](https://github.com/emcd173/EminenceAlignment/blob/master/client/contracts/Amsterdam.sol)</i>
+<i>To audit the full Amsterdam.sol smart-contract, [look here](https://github.com/emcd173/EminenceAlignment/blob/master/client/contracts/Amsterdam.sol)</i>
+
+
 
 ### Workflow Diagram
 A visual diagram outling the process may be seen below:
 
 ![Diagram](https://github.com/emcd173/EminenceAlignment/blob/master/Diagram2.PNG)
+
 
 
 ## Usage Scenarios
@@ -65,6 +68,7 @@ We envsion a wide array of use cases for Memoir, for example:
 6. <i><b>Classified Government Disclosures</b></i> - Today, the government may choose to release classified material to the public after a given period of time - such as the JFK Files, etc.  However, the public has no proof that these files haven't been altered, tampeered, with, etc. since they were created.  Memoir creates the underpinnings of a better declassification system for classified government material, allowing the public to verify file consistency since a given point in time.
 
 
+
 ## Front User Experience and Web Application
 
 The user can take two primary actions on Memoir - first, he can upload a file, and timelock it, following the process shown above.  The user may also view the list of memoirs uploaded by other users, seeing the description, countdown until the key is released, and encrypted file address. 
@@ -73,11 +77,12 @@ Below, is an example of the experience for a user uploading a file.
 
 ![UI](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirUIGif.gif)
 
-The Memoir Web Interface divides the timecapsule listings based off of whether or not the key for the encrypted file stored on IPFS has been released.  <b>The Library</b> tab sorts all of the objects which have been released, while <The Vault</b> tab sorts the objects where the key is yet to be unlocked
+The Memoir Web Interface divides the timecapsule listings based off of whether or not the key for the encrypted file stored on IPFS has been released.  <b>The Library</b> tab sorts all of the objects which have been released, while <b>The Vault</b> tab sorts the objects where the key is yet to be unlocked
 
-![UI](example)
+//gif
 
 In future iterations of this project, we envision the possibility of more advanced content curation techniques.  This might include the ability to star or follow specific creators, query based on content description, or upvote/rank locked content (possibly through a content-curated registry schema).
+
 
 
 ## Addressing Potential Vulnerabilites
@@ -89,11 +94,13 @@ Thus, in this beta build, we assume that there exists a deterring level of compu
 Importantly, we are also considering implementing alternative approaches to key storage in future builds.  For instance, leveraging private channels in Quorum v2.0.2 - or by leveraging Trusted Execution Environments (TEE's) like Intel SGX through Microsoft's open-sourced Coco Framework ([Link.](https://github.com/azure/coco-framework)).  
 
 
-## Depreciated Design Iterations
+
+## Depreciated Symetric Key Approach
 
 Initially, we envisioned a symetric key schema where the web3 uploader encrypts the uploaded file with a symetric key and uploads the encrypted file onto the Interplanetary File System.  The decryption key, a One-time Pad (OTP) is passed to the Amsterdam.sol smart-contract as a private, time-locked variable along with the IPFS address.  In addition, web3 ingests the description string inputted by the user at the time of upload into Amsterdam.sol.  However, we realized that this created a few insurmountable vulnerabilities.
 
-#### Vulnerabilities associated with this approach
+
+#### Vulnerabilities associated with the OTP approach
 
 First, there existed an <b>"in-transit" vulnerability</b> where the OTP might be intercepted at the client level, this risk could be obfuscated through encryption-in-transit (such as TLS, HTTPS, etc). However, this did not resolve the <b>"exit node" vulnerability</b> - as the exit node making the RPC-call would still have access to the key in plaintext.
 
