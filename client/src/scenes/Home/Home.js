@@ -55,7 +55,7 @@ class Home extends Component {
          // Load and show all Entries 
          this.loadAllEntries();
          this.listenToAppendEntryEvent();
-         // this.newEntry();
+        //  this.newEntry();
       }).catch((error) => {
       });
     })
@@ -81,7 +81,6 @@ class Home extends Component {
       entryIdList.forEach( (entryId, index) => {
           this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
             console.log("entry",entry);
-
               idsProcessed++;
               var entryData = {
                 "id" : entry[0].toNumber(),
@@ -135,6 +134,7 @@ class Home extends Component {
             waitingConfirmation: true,
             transactionHash: results['tx']
         });
+        
     }).catch((err) => {
     })
   }
@@ -149,7 +149,9 @@ class Home extends Component {
           this.setState({
               waitingConfirmation: false,
           });
+
           this.loadAllEntries();
+          
         }
       })
   }
@@ -158,11 +160,7 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <CenteredTab entryResults={this.state.entryResults} 
-          amsterdamContractInstance={this.state.amsterdamContractInstance}
-          loadAllEntries={this.loadAllEntries}
-          account={this.state.account}
-        />
+        <CenteredTab entryResults={this.state.entryResults}/>
       </div>
     );
   }

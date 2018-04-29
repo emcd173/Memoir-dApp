@@ -16,7 +16,7 @@ Memoir is a novel approach to timelocking secrets of any type.  We built the pro
 
 On the front-end, the user uploads a file (this can be any form of content, see below for examples) and inputs a set time period for which they'd like their file to be encrypted.  The user may also optionally input a string up to 240 charecters as a public description, etc.
 
-The web3 uploader calls a private function which generates an ECDSA keypair.  They public key is emitted to the client and used to encrypt the file.  The encrypted file is uploaded onto the Interplanetary File System.  The IPFS address for the encrypted file, the description string, and time-lock period are ingested as parameters into the Amsterdam.sol struct.  The private key to decrypt the file remains private for a predetermined period of time.
+The web3 uploader calls a private function which generates an ECDSA keypair.  They public key is emitted to the client and used to encrypt the file.  The encrypted file is uploaded onto the Interplanetary File System.  The IPFS address for the encrypted file, the description string, and time-lock period are ingested as parameters into the Amsterdam.sol struct.  The private key to decrypt the file remains obfuscated for a period of time defined by the user.
 
 The parameters taken by the Amsterdam.sol smart-contract are shown summarized below:
 
@@ -67,9 +67,15 @@ We envsion a wide array of use cases for Memoir, for example:
 
 ## Front User Experience and Web Application
 
-The user can take two primary actions on Memoir - first, he can upload a file, and timelock it, following the process shown above.  The user may also view the list of memoirs uploaded by other users, seeing the description, countdown until the key is released, and encrypted file address.  An example of the web UI is shown below, and can be accessed [here](http://memoir-time-capsule.s3-website-us-east-1.amazonaws.com/).
+The user can take two primary actions on Memoir - first, he can upload a file, and timelock it, following the process shown above.  The user may also view the list of memoirs uploaded by other users, seeing the description, countdown until the key is released, and encrypted file address. 
+
+Below, is an example of the experience for a user uploading a file.
 
 ![UI](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirUIGif.gif)
+
+The Memoir Web Interface divides the timecapsule listings based off of whether or not the key for the encrypted file stored on IPFS has been released.  <b>The Library</b> tab sorts all of the objects which have been released, while <The Vault</b> tab sorts the objects where the key is yet to be unlocked
+
+![UI](example)
 
 In future iterations of this project, we envision the possibility of more advanced content curation techniques.  This might include the ability to star or follow specific creators, query based on content description, or upvote/rank locked content (possibly through a content-curated registry schema).
 
@@ -98,7 +104,7 @@ A visual diagram outling this first iteration was envisioned as below:
 
 ## Conclusion
 
-Memoir is our submission to Hackital.io, a DC-area blockchain hackathon sponsored by Consensys, OpenDAO, Soylent, and others
+Memoir is our submission to Hackital.io, a DC-area blockchain hackathon sponsored by Consensys, OpenDAO, Soylent, and others.
 
 To access the application, visit the url, here: http://memoir-time-capsule.s3-website-us-east-1.amazonaws.com/
 
