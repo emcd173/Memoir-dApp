@@ -38,7 +38,7 @@ class entryList extends Component {
               <Card
                title={entry.title}
                ipfs={entry.ipfs}
-               descrip={entry.descrip}
+               desc={entry.descrip}
                unlockTime={entry.unlockTime} 
                type={entry.type}
                id={entry.id}
