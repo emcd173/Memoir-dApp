@@ -4,6 +4,13 @@ import FileUpload from '@material-ui/icons/FileUpload';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
+// Import Services
+import {
+  getWeb3Service,
+  getWeb3Object,
+  getAmsterdamContractInstance,
+  getCurrentAccount
+} from '../../services/providerService';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -38,7 +45,6 @@ const ipfsApi = window.IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'})
 class Form extends React.Component {
   constructor(props) {
     super(props);
-console.log("test")
     this.state = {
       open: false,
       title: "",
@@ -47,8 +53,27 @@ console.log("test")
       author: ""
     }
     // bind methods
+    this.newEntry = this.newEntry.bind(this);
     this.captureFile = this.captureFile.bind(this)
     this.saveToIpfs = this.saveToIpfs.bind(this)
+  }
+
+  componentDidMount() {
+    getWeb3Service().then(() => {
+      this.setState({
+       web3: getWeb3Object(),
+       amsterdamContractInstance: getAmsterdamContractInstance(),
+      });
+
+      var instance = getAmsterdamContractInstance();
+
+      getCurrentAccount().then( (accountResult) => {
+       this.setState({
+         account: accountResult,
+       })
+      }) .catch((error) => {
+      });
+    })
   }
 
   captureFile (event) {
@@ -69,10 +94,43 @@ console.log("test")
         console.log(response)
         ipfsId = response[0].hash
         console.log(ipfsId)
-        this.setState({added_file_hash: ipfsId})
+        this.setState({added_file_hash: ipfsId});
+        this.newEntry();
       }).catch((err) => {
         console.error(err)
       })
+  }
+
+  newEntry(){
+    // Declaring this for later so we can chain functions.
+    // Form submitted, now waiting on metamask
+    this.setState({
+        formSubmitted: true
+    });
+
+    // Get accounts.
+    this.state.amsterdamContractInstance.appendEntry(
+     10,
+      "2019-04-23T18:25:43.511Z", // unlock time
+      "ipfs", // title
+      "description", // description
+      1, //uint _entryType
+      [1,2], //uint[] _file
+      1, // uint _rand,
+      {
+          from: this.state.account, 
+      }
+    ).then((results) => {
+        // Metamask has initiated transaction
+        // Now wait for transaction to be added to blockchain
+        this.setState({
+          waitingMetamask: false,
+          waitingConfirmation: true,
+          transactionHash: results['tx']
+      });
+        
+    }).catch((err) => {
+    })
   }
 
   handleClickOpen = () => {
