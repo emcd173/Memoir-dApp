@@ -95,6 +95,8 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     this.newEntry = this.newEntry.bind(this);
     this.captureFile = this.captureFile.bind(this)
     this.saveToIpfs = this.saveToIpfs.bind(this)
+
+    this.listenToAppendEntryEvent();
   }
 
   componentDidMount() {
@@ -191,7 +193,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
         console.log(response)
         ipfsId = response[0].hash
         console.log("https://ipfs.io/ipfs/" + ipfsId)
-        this.setState({added_file_hash: ipfsId})
+        this.setState({added_file_hash: "https://ipfs.io/ipfs/" + ipfsId})
          return true;
       }).then((result)=>{
         this.newEntry();      
@@ -213,7 +215,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     console.log(this.state);
     this.state.amsterdamContractInstance.appendEntry(
       this.state.ed, // unlockTime
-      "ipfs", // ipfs
+      this.state.added_file_hash, // ipfs
       this.state.title, // title
       this.state.description, // description
       this.state.category, // entryType
@@ -226,7 +228,6 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
         this.setState({
           open: false
         });
-
     }).catch((err) => {
     })
   }
@@ -250,8 +251,6 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     const cat = this.state.category;
     // Set state with variables
 
-    this.state.
-
     this.setState({endDate, title, des, cat});
     var encryptBlob = new File([this.state.encText], this.state.filename, {type: "text/plain"});
     let reader = new window.FileReader()
@@ -259,27 +258,68 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     reader.readAsArrayBuffer(encryptBlob);
   };
 
-  // // get public key
-  // getPublicKeyFromSc(){
-  //   this.state.
-  //   return new Promise(function(resolve, reject) {
-  //     this.state.amsterdamContractInstance.getKeyPair({from: this.state.account}).then((results) => {
-  //         // Metamask has initiated transaction
-  //         // Now wait for transaction to be added to blockchain
-  //         this.setState({
-  //           open: false
-  //         });
+  // Listen for events raised from the contract
+  listenToAppendEntryEvent() {
+      this.props.amsterdamContractInstance.EventAppendEntry({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
+          // This is called after metamask initiates transaction
+          // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
+        // if (event['transactionHash'] === this.state.transactionHash){
+          console.log("Event: ", event);
+          this.setState({
+              waitingConfirmation: false,
+          });
 
-  //     }).catch((err) => {
-  //     })
-  //   });
-  // } 
+          this.loadAllEntries();
+          
+        // }
+      })
+  }
 
-  // handleClose = () => {
-  //   this.setState({
-  //     open: false
-  //   });
-  // }
+  // get public key
+  getPublicKeyFromSc(){
+    return new Promise(function(resolve, reject) {
+      this.props.amsterdamContractInstance.getKeyPair({from: this.state.account}).then((results) => {
+          // Metamask has initiated transaction
+          // Now wait for transaction to be added to blockchain
+          this.setState({
+            transactionHash: results['tx']
+          });
+          this.listToPubKeyEvent();
+
+      }).catch((err) => {
+      })
+    });
+  } 
+
+  // Listen for events raised from the contract
+  listToPubKeyEvent() {
+      this.props.amsterdamContractInstance.EventPubKey({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
+          // This is called after metamask initiates transaction
+          // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
+        if (event['transactionHash'] === this.state.transactionHash){
+          console.log("Event: ", event);
+          this.setState({
+              waitingConfirmation: false,
+              publicKey: event['']
+          });
+          
+          this.sendFileToIpfs()
+        }
+      })
+  }
+
+  sendFileToIpfs(){
+    var encryptBlob = new File([this.state.encText], this.state.filename, {type: "text/plain"});
+    let reader = new window.FileReader()
+    reader.onloadend = () => this.saveToIpfs(reader)
+    reader.readAsArrayBuffer(encryptBlob);
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    });
+  }
 
   handleCatChange = event => {
     this.setState({ [event.target.name]: event.target.value });
