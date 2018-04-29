@@ -29,6 +29,7 @@ class entryList extends Component {
 
   render() {
     // Dyanmically generate each table row based on data received from api
+    console.log(this.props.entryResults);
     const entryListTable = this.props.entryResults.map((entry) => {
       return (
             <Card
