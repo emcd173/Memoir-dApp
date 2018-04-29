@@ -69,14 +69,16 @@ We envsion a wide array of use cases for Memoir, for example:
 
 The user can take two primary actions on Memoir - first, he can upload a file, and timelock it, following the process shown above.  The user may also view the list of memoirs uploaded by other users, seeing the description, countdown until the key is released, and encrypted file address.  An example of the web UI is shown below, and can be accessed [here](http://memoir-time-capsule.s3-website-us-east-1.amazonaws.com/).
 
-//UI Example
+![UI](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirUIGif.gif)
 
 In future iterations of this project, we envision the possibility of more advanced content curation techniques.  This might include the ability to star or follow specific creators, query based on content description, or upvote/rank locked content (possibly through a content-curated registry schema).
 
 
 ## Addressing Potential Vulnerabilites
 
-There are some issues with storing a decryption key on a publically distributed blockchain ledger.  While the key itself exists as a private variable, annd cannot be called by other contracts, it is still recorded in bytecode on the EVM.  An attacker could theoretically attempt to brute force the blockchain dataset for the key binary, but he would have to know the exact length, as well as the IPFS address for the file (which in a future iteration will be ingested as a private variable on the smart-contract).  Thus, in this beta build, we assume that there exists a deterring level of computational infeasability in deriving both the key and address from the bytecode.
+There are some issues with storing a decryption key on a publically distributed blockchain ledger.  While the key itself exists as a private variable, annd cannot be called by other contracts, it is still recorded in bytecode on the EVM.  An attacker could theoretically attempt to brute force the blockchain dataset for the key binary, but he would have to know the exact length, as well as the IPFS address for the file (which in a future iteration will be ingested as a private variable on the smart-contract).  
+
+Thus, in this beta build, we assume that there exists a deterring level of computational infeasability in deriving both the key and address from the bytecode.
 
 Importantly, we are also considering implementing alternative approaches to key storage in future builds.  For instance, leveraging private channels in Quorum v2.0.2 - or by leveraging Trusted Execution Environments (TEE's) like Intel SGX through Microsoft's open-sourced Coco Framework ([Link.](https://github.com/azure/coco-framework)).  
 
