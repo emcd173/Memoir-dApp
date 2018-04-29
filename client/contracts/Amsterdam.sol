@@ -19,7 +19,7 @@ contract Amsterdam is ownable {
   struct PK {
     uint id;
     uint priv_key;
-  }
+}
 
 // state variables
 mapping (uint => Entry) public entries;
@@ -73,7 +73,7 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
     counter,
     generateKeyPair(p, q)[1]
     );
- } 
+}
 
   function generateKeyPair(uint _p, uint _q) public returns(uint[]) {
     uint e;
@@ -93,12 +93,11 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
         break;
     }
     // step 4: calculate d, such that d is 1/e mod lamda
-    d = (1/e) % lamda;
+    d = 1 / (e % lamda);
     // step 5: return public key (e) and private key (d)
     returnValues[0] = e;
     returnValues[1] = d;
     return(returnValues);
-
   }
 
   function release(uint _id) public{
