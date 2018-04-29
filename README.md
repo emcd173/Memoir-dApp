@@ -56,7 +56,6 @@ A visual diagram outling the process may be seen below:
   We envsion a wide array of use cases for Memoir, for example:
 
 1. <i><b>Personal Diary</b></i> - An individual may wish to conceal their writing (such as a novel, diary, personal letter) from adversaries - while still proving that they wrote it during a given period in time.  For example, a political refugee deprived of free speech may wish to detail their wartime experience while deflecting risk associated speaking out against an authority.  
-
 2. <i><b>Music</b></i> - An musician, at the peak of their notereiety, might wish to lock up a song for a 100 years - so that it is not released to the public unti after their death.  Imagine if a song from Beethoven, the Beatles, or Biggie was timelocked through history and released today.
 
 3. <i><b>Public Cryptowill</b></i> - An individual may wish to timelock a private key connected to a bitcoin wallet for a given period of time, so that the funds are not released to the public until a given point in the future.
@@ -95,12 +94,14 @@ Importantly, we are also considering implementing alternative approaches to key 
 
 ## Depreciated Symetric Key Approach
 
-Initially, we envisioned a symetric key schema where the web3 uploader encrypts the uploaded file with a symetric key and uploads the encrypted file onto the Interplanetary File System.  The decryption key, a One-time Pad (OTP) is passed to the Amsterdam.sol smart-contract as a private, time-locked variable along with the IPFS address.  In addition, web3 ingests the description string inputted by the user at the time of upload into Amsterdam.sol.  However, we realized that this created a few insurmountable vulnerabilities.
+Initially, we envisioned a symetric key schema where the web3 uploader encrypts the uploaded file with a symetric key and uploads the encrypted file onto the Interplanetary File System.  The decryption key, a One-time Pad (OTP) is passed to the Amsterdam.sol smart-contract as a private, time-locked variable along with the IPFS address.  
+
+In addition, web3 ingests the description string inputted by the user at the time of upload into Amsterdam.sol.  However, we realized that this created a few insurmountable vulnerabilities.
 
 
 #### Vulnerabilities associated with the OTP approach
 
-First, there existed an <b>"in-transit" vulnerability</b> where the OTP might be intercepted at the client level, this risk could be obfuscated through encryption-in-transit (such as TLS, HTTPS, etc). However, this did not resolve the <b>"exit node" vulnerability</b> - as the exit node making the RPC-call would still have access to the key in plaintext.
+First, there existed an <b>"in-transit" vulnerability</b> where the OTP might be intercepted at the client level, this risk could be obfuscated through encryption-in-transit (such as TLS, HTTPS, etc).  However, this did not resolve the <b>"exit node" vulnerability</b> - as the exit node making the RPC-call would still have access to the key in plaintext.
 
 A visual diagram outling this first iteration was envisioned as below:
 
@@ -109,8 +110,8 @@ A visual diagram outling this first iteration was envisioned as below:
 
 ## Conclusion
 
-Memoir is our submission to Hackital.io, a DC-area blockchain hackathon sponsored by Consensys, OpenDAO, Soylent, and others.  We'd like to thank all of the organizers and participants for making this event possible.
+Memoir is our submission to Hackital.io, a DC-area blockchain hackathon sponsored by Consensys, OpenDAO, Soylent, and others.  We'd like to give a special thanks to all of the organizers and participants for making this event possible.
 
-To access the application, visit the url, here: http://memoir-time-capsule.s3-website-us-east-1.amazonaws.com/
+To access the application, visit the url, here: [Memoir dApp](http://memoir-time-capsule.s3-website-us-east-1.amazonaws.com/)
 
 We invite you to audit our code, provide comments, and extend Memoir's functionality.  Enjoy!
