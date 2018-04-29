@@ -95,8 +95,6 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     this.newEntry = this.newEntry.bind(this);
     this.captureFile = this.captureFile.bind(this)
     this.saveToIpfs = this.saveToIpfs.bind(this)
-
-    this.listenToAppendEntryEvent();
   }
 
   componentDidMount() {
@@ -110,6 +108,8 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
 
 
       getCurrentAccount().then( (accountResult) => {
+       this.listenToAppendEntryEvent();
+       this.listenToPubKeyEvent();
        this.setState({
          account: accountResult,
        })
@@ -250,8 +250,8 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     const des = this.state.description;
     const cat = this.state.category;
     // Set state with variables
-
-    this.setState({endDate, title, des, cat});
+    // this.getPublicKeyFromSc();
+    // this.setState({endDate, title, des, cat});
     var encryptBlob = new File([this.state.encText], this.state.filename, {type: "text/plain"});
     let reader = new window.FileReader()
     reader.onloadend = () => this.saveToIpfs(reader)
@@ -277,30 +277,26 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
 
   // get public key
   getPublicKeyFromSc(){
-    return new Promise(function(resolve, reject) {
-      this.props.amsterdamContractInstance.getKeyPair({from: this.state.account}).then((results) => {
-          // Metamask has initiated transaction
-          // Now wait for transaction to be added to blockchain
-          this.setState({
-            transactionHash: results['tx']
-          });
-          this.listToPubKeyEvent();
-
-      }).catch((err) => {
-      })
-    });
+    this.props.amsterdamContractInstance.getKeyPair({from: this.state.account}).then((results) => {
+        // Metamask has initiated transaction
+        // Now wait for transaction to be added to blockchain
+        this.setState({
+          transactionHash: results['tx']
+        });
+    }).catch((err) => {
+    })
   } 
 
   // Listen for events raised from the contract
-  listToPubKeyEvent() {
+  listenToPubKeyEvent() {
       this.props.amsterdamContractInstance.EventPubKey({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
           // This is called after metamask initiates transaction
           // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
         if (event['transactionHash'] === this.state.transactionHash){
-          console.log("Event: ", event);
+          console.log("Pub Key Event: ", event);
           this.setState({
               waitingConfirmation: false,
-              publicKey: event['']
+              publicKey: event['args']._pubkey.toNumber(),
           });
           
           this.sendFileToIpfs()
