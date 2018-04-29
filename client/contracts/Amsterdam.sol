@@ -125,17 +125,6 @@ contract Amsterdam is ownable {
       }
 
 
-  function eventTestRelease(uint _id) public {
-    EvtRelease(entries[_id].owner, privateKeys[_id].key, entries[_id].ipfs);
-  }
-
-  function eventTestEnc(uint[] _enc_msg) public {
-    EventEncMsg(_enc_msg);
-  }
-
-  function eventTestDec(uint[] _dec_msg) public {
-    EventDecMsg(_dec_msg);
-  } 
 
 
   // some getter functions
@@ -161,3 +150,4 @@ contract Amsterdam is ownable {
   }
 
 }
+
