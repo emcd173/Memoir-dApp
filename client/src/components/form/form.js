@@ -318,7 +318,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                       id="multiline-flexible"
                       label="Description"
                       multiline
-                      rows="3"
+                      rows="1"
                       name="description"
                       value={this.state.description}
                       onChange={this.handleChange('description')}
@@ -373,7 +373,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                 </div>
                 <input type="file" id="myFile" onChange={this.captureFile}/>
               </DialogContent>
-              <DialogActions>
+              <DialogActions className={this.props.classes.abc}>
                 <Button onClick={this.handleClose} color="primary">
                   Cancel
                 </Button>
