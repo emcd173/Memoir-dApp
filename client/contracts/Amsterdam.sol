@@ -14,12 +14,14 @@ contract Amsterdam is ownable {
     string descrip;
     uint entryType;
     uint pub_key;
+    bool isReleased;
   }
 
+//seperate struct for obfuscated key storage
   struct PK {
     uint id;
     uint priv_key;
-  }
+}
 
 // state variables
 mapping (uint => Entry) public entries;
@@ -66,14 +68,15 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
      _title,
      _description,
      _entryType,
-     generateKeyPair(p, q)[0]
+     generateKeyPair(p, q)[0],
+     false
      );
 
   privateKeys[counter] = PK(
     counter,
     generateKeyPair(p, q)[1]
     );
- } 
+}
 
   function generateKeyPair(uint _p, uint _q) public returns(uint[]) {
     uint e;
@@ -93,17 +96,20 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
         break;
     }
     // step 4: calculate d, such that d is 1/e mod lamda
-    d = (1/e) % lamda;
+    //d = modinv(lamda, e);
     // step 5: return public key (e) and private key (d)
-    returnValues[0] = e;
-    returnValues[1] = d;
+    //returnValues[0] = e; - to be edited
+    //returnValues[1] = d; - to be edited
+    returnValues[0] = 17;
+    returnValues[1] = 413;
     return(returnValues);
-
   }
 
   function release(uint _id) public{
     // check if it is time to release
     require(now >= entries[_id].unlockTime);
+    // change isReleased value
+    entries[_id].isReleased = true;
     // trigger an event
     EvtRelease(entries[_id].owner, privateKeys[_id].priv_key, entries[_id].ipfs);
   }
@@ -157,7 +163,42 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
     returnValues[1] = primes[rand2];
     return(returnValues);
 
-}
+  }
+
+  function egcd(uint a, uint b) public returns(uint[]) {
+    uint g;
+    uint y;
+    uint x;
+    uint calc;
+    uint[] memory returnValues = new uint[](3);
+    if (a == 0) {
+      returnValues[0] = b;
+      returnValues[1] = 0;
+      returnValues[2] = 1;
+      return(returnValues);
+    } else {
+      g = egcd(b % a, a)[1];
+      y = egcd(b % a, a)[2];
+      x = egcd(b % a, a)[3];
+      calc = x - (b / a) * y;
+      returnValues[0] = g;
+      returnValues[1] = calc;
+      returnValues[2] = y;
+      return(returnValues);
+    }
+  }
+
+  function modinv(uint a, uint m) public returns(uint) {
+    uint g;
+    uint x;
+    uint y;
+    uint temp;
+    g = egcd(a,m)[1];
+    x = egcd(a,m)[2];
+    y = egcd(a,m)[3];
+    temp = x % m;
+    return(temp);
+  }
 
   // some getter functions
 
