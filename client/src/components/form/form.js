@@ -56,6 +56,7 @@ class Form extends React.Component {
     this.newEntry = this.newEntry.bind(this);
     this.captureFile = this.captureFile.bind(this)
     this.saveToIpfs = this.saveToIpfs.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   componentDidMount() {
@@ -79,11 +80,12 @@ class Form extends React.Component {
   captureFile (event) {
     event.stopPropagation()
     event.preventDefault()
-    const file = event.target.files[0]
-    let reader = new window.FileReader()
-    reader.onloadend = () => this.saveToIpfs(reader)
-    reader.readAsArrayBuffer(file);
+    this.setState({
+      file: event.target.files[0]
+    })
   }
+
+
 
   saveToIpfs (reader) {
     let ipfsId
@@ -123,12 +125,9 @@ class Form extends React.Component {
     ).then((results) => {
         // Metamask has initiated transaction
         // Now wait for transaction to be added to blockchain
-        this.setState({
-          waitingMetamask: false,
-          waitingConfirmation: true,
-          transactionHash: results['tx']
-      });
-        
+ 
+        console.log(results);
+        console.log(this.state.account)
     }).catch((err) => {
     })
   }
@@ -143,6 +142,14 @@ class Form extends React.Component {
       [name]: event.target.value,
     });
   };
+
+
+  handleClose() {
+    let file = this.state.file;
+    let reader = new window.FileReader()
+    reader.onloadend = () => this.saveToIpfs(reader)
+    reader.readAsArrayBuffer(file);
+  }
 
   render() {
 
