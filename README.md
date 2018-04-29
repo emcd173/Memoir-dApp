@@ -1,4 +1,4 @@
-
+![HeaderImage](https://github.com/emcd173/EminenceAlignment/blob/master/Memoir%20Logo.PNG)
 
 # Memoir: A Trustless Digital Time Capsule
 
@@ -12,7 +12,9 @@ The web3 uploader calls a private function which generates an ECDSA keypair.  Th
 
 The parameters taken by the Amsterdam.sol smart-contract is summarized below:
 
-![File]()
+A visual diagram outling the process may be seen below:
+
+![Diagram](https://github.com/emcd173/EminenceAlignment/blob/master/Diagram2.PNG)
 
 
 ## Scenario
@@ -26,6 +28,7 @@ We envsion a wide array of use cases for Memoir, for example:
 ## Design Constraints
 
 Alternatively, we also considerded a symetric key schema where the web3 uploader encrypts the uploaded file with a symetric key and uploads the encrypted file onto the Interplanetary File System.  The decryption key, a One-time Pad (OTP) is passed to the Amsterdam.sol smart-contract as a private, time-locked variable along with the IPFS address.  In addition, web3 ingests the description string inputted by the user at the time of upload into Amsterdam.sol
-A visual diagram outling the process may be seen below
+
+A visual diagram outling the process may be seen below:
 
 ![Memoir Diagram](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirDiagram.PNG)
