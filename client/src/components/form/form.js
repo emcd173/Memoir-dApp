@@ -199,8 +199,6 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
       this.state.title, // title
       this.state.description, // description
       this.state.category, // entryType
-      [1,2], //uint[] _file
-      1, // uint _rand,
       {
           from: this.state.account, 
       }
