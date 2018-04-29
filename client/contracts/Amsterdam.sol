@@ -51,7 +51,7 @@ event EventEnty(
   uint id
   );
 
-function getKeyPair() public returns(uint[]) {
+function getKeyPair() public {
   // generate psdeudo random large primes
   uint p;
   uint q;

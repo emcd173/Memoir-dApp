@@ -80,6 +80,11 @@ class SimpleCard extends React.Component {
   }
 
   render() {
+    String.prototype.trunc = String.prototype.trunc ||
+          function(n){
+              return (this.length > n) ? this.substr(0, n-1) + '' : this;
+          };
+
     const { classes } = this.props;
     return (
       <div>
@@ -110,7 +115,7 @@ class SimpleCard extends React.Component {
              <div className="bottom">
                <Typography component="p">
                <div className="ipfs">
-                 {this.props.ipfs}
+                 <a target="_blank" href={`https://ipfs.io/ipfs/${this.props.ipfs}`}>ipfs.io/{this.props.ipfs.trunc(15)}...</a>
                </div>
                </Typography>
                <div className="button">
