@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 // import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import imagesLoaded from 'imagesloaded'
 
 // Import Scenes
 
@@ -9,7 +10,9 @@ import React, { Component } from 'react';
 import Card from '../Card/Card'
 
 // Import Styles
-// import './entryList.scss';
+import './EntryList.scss';
+
+// const masonry = window.Masonry;
 
 // Import Services
 
@@ -27,23 +30,74 @@ class entryList extends Component {
     
 	}
 
+
+  // resizeGridItem(item){
+  //    var grid = document.getElementsByClassName("grid")[0];
+  //    var rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+  //    var rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+  //    var rowSpan = Math.ceil((item.querySelector('.content').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
+  //    item.style.gridRowEnd = "span "+rowSpan;
+  // }
+
+  // resizeAllGridItems(){
+  //    var allItems = document.getElementsByClassName("entryItem");
+  //    for(var x=0; x<allItems.length;x++){
+  //       this.resizeGridItem(allItems[x]);
+  //    }
+  // }
+
+  // resizeInstance(instance){
+  //    var item = instance.elements[0];
+  //    this.resizeGridItem(item);
+  // }
+
+  // componentDidUpdate(){
+
+  // }
+
+  // setGrid() {
+  //   //wait for a paint to do scrolly stuff
+  //   window.requestAnimationFrame(function() {
+  //     this.resizeAllGridItems();
+  //     window.addEventListener("resize", this.resizeAllGridItems);
+  //     var allItems = document.getElementsByClassName("entryItem");
+  //     for(var x=0;x<allItems.length;x++){
+  //        imagesLoaded( allItems[x], () => this.resizeInstance);
+  //     }
+  //   });
+  // }
+
   render() {
     // Dyanmically generate each table row based on data received from api
     const entryListTable = this.props.entryResults.map((entry) => {
       return (
-            <Card
-             key={entry.id}
-             title={entry.title}
-             ipfs={entry.ipfs}
-             descrip={entry.descrip}
-             unlockTime={entry.unlockTime} 
-             type={entry.type}
-            />)
+            <div className="entryItem">
+              <div className="content" key={entry.id}
+>
+              <Card
+               title={entry.title}
+               ipfs={entry.ipfs}
+               descrip={entry.descrip}
+               unlockTime={entry.unlockTime} 
+               type={entry.type}
+              />
+              </div>
+            </div>)
     });
+
+    // window.onload = this.resizeAllGridItems();
+    // window.addEventListener("resize", this.resizeAllGridItems);
+    // var allItems = document.getElementsByClassName("entryItem");
+    // for(var x=0;x<allItems.length;x++){
+    //    imagesLoaded( allItems[x], this.resizeInstance);
+    // }
+
+
+
     return (
-      <div className="">
-        {entryListTable}
-      </div>
+      <div className="grid">
+            {entryListTable}
+      </div>  
     );
   }
 }

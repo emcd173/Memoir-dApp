@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = {
   card: {
@@ -27,31 +28,34 @@ function SimpleCard(props) {
   const { classes } = props;
   return (
     <div>
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary">
-            {props.owner}
-          </Typography>
-          <Typography variant="headline" component="h2">
-            {props.title}
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            {props.type}
-          </Typography>
-          <Typography component="p">
-            {props.desc}
-          </Typography>
-          <Typography component="p">
-            {props.ipfs}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          {/* <Button size="small">{props.countdown}</Button> */}
-        </CardActions>
-       {/* <Button variant="raised" component="span" className={classes.button}>
-         Upload
-       </Button>  */}
-      </Card>
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary">
+                {props.owner}
+              </Typography>
+              <Typography variant="headline" component="h2">
+                {props.title}
+              </Typography>
+              <Typography className={classes.pos} color="textSecondary">
+                {props.type}
+              </Typography>
+              <Typography component="p">
+                {props.desc}
+              </Typography>
+              <Typography component="p">
+                {props.ipfs}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              {/* <Button size="small">{props.countdown}</Button> */}
+            </CardActions>
+           <Button variant="raised" component="span" className={classes.button}>
+             Upload
+           </Button>
+           <Button variant="fab" color="primary" aria-label="add" className={classes.button}>
+             <AddIcon />
+           </Button>
+          </Card>
     </div>
   );
 }
