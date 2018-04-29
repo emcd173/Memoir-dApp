@@ -17,6 +17,7 @@ contract Amsterdam is ownable {
     bool isReleased;
   }
 
+//seperate struct for private key storage
   struct PK {
     uint id;
     uint priv_key;
