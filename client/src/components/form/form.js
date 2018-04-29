@@ -150,6 +150,20 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
 
   }
 
+  encryptWithPublicKey(plainFile){
+    // Encrypt with the public key...
+    var encrypt = new JSEncrypt();
+    encrypt.setPrivateKey(this.state.privateKey);
+    return encrypt.encrypt(plainFile);
+  }
+
+  decryptWithPrivateKey(encryptedFile){
+    // Decrypt with the private key...
+    var decrypt = new JSEncrypt();
+    decrypt.setPrivateKey(this.state.privateKey);
+    return decrypt.decrypt(encryptedFile);
+  }
+
   captureFile (event) {
     event.stopPropagation()
     event.preventDefault()
@@ -221,7 +235,6 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     this.setState({ open: true });
   };
 
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
@@ -231,47 +244,46 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
   handleSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
-    
     const endDate = document.getElementById('date').value;
-    
     const title = this.state.title;
     const des = this.state.description;
     const cat = this.state.category;
+    // Set state with variables
+
+    this.state.
 
     this.setState({endDate, title, des, cat});
-
     var encryptBlob = new File([this.state.encText], this.state.filename, {type: "text/plain"});
-
     let reader = new window.FileReader()
     reader.onloadend = () => this.saveToIpfs(reader)
     reader.readAsArrayBuffer(encryptBlob);
   };
 
-  encryptWithPublicKey(plainFile){
-    // Encrypt with the public key...
-    var encrypt = new JSEncrypt();
-    encrypt.setPrivateKey(this.state.privateKey);
-    return encrypt.encrypt(plainFile);
-  }
+  // // get public key
+  // getPublicKeyFromSc(){
+  //   this.state.
+  //   return new Promise(function(resolve, reject) {
+  //     this.state.amsterdamContractInstance.getKeyPair({from: this.state.account}).then((results) => {
+  //         // Metamask has initiated transaction
+  //         // Now wait for transaction to be added to blockchain
+  //         this.setState({
+  //           open: false
+  //         });
 
-  decryptWithPrivateKey(encryptedFile){
-    // Decrypt with the private key...
-    var decrypt = new JSEncrypt();
-    decrypt.setPrivateKey(this.state.privateKey);
-    return decrypt.decrypt(encryptedFile);
-  }
+  //     }).catch((err) => {
+  //     })
+  //   });
+  // } 
 
-  handleClose = () => {
-    this.setState({
-      open: false
-    });
-  }
+  // handleClose = () => {
+  //   this.setState({
+  //     open: false
+  //   });
+  // }
 
   handleCatChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
-
 
 
   render() {
@@ -318,7 +330,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                       id="multiline-flexible"
                       label="Description"
                       multiline
-                      rows="1"
+                      rows="2"
                       name="description"
                       value={this.state.description}
                       onChange={this.handleChange('description')}

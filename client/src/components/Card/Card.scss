@@ -1,0 +1,18 @@
+.bottom{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  align-items: baseline;
+}
+
+.button{
+  display: flex;
+  padding-bottom: 15px;
+}
+
+.ipfs{
+  display: flex;
+  a:hover{
+    color: $secondary-regular;
+  }
+}
