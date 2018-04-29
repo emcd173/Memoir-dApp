@@ -8,14 +8,14 @@
       "type": "constructor"
     }
   ],
-  "bytecode": "0x60606040523415600e57600080fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550603580605b6000396000f3006060604052600080fd00a165627a7a72305820a9da8c1bcf439b54718bb72ed59eb766d49a2c3638c1786ac80abb12bcde59200029",
-  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820a9da8c1bcf439b54718bb72ed59eb766d49a2c3638c1786ac80abb12bcde59200029",
-  "sourceMap": "26:220:2:-;;;189:55;;;;;;;;229:10;221:5;;:18;;;;;;;;;;;;;;;;;;26:220;;;;;;",
+  "bytecode": "0x6080604052348015600f57600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550603580605d6000396000f3006080604052600080fd00a165627a7a72305820811e158bbef0c8be1bc7c299a0961fc00fef5c18bd0d9c0885fd20126fc22e7b0029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820811e158bbef0c8be1bc7c299a0961fc00fef5c18bd0d9c0885fd20126fc22e7b0029",
+  "sourceMap": "26:220:2:-;;;189:55;8:9:-1;5:2;;;30:1;27;20:12;5:2;189:55:2;229:10;221:5;;:18;;;;;;;;;;;;;;;;;;26:220;;;;;;",
   "deployedSourceMap": "26:220:2:-;;;;;",
   "source": "pragma solidity ^0.4.18;\n\ncontract ownable {\n  // state variables\n  address owner;\n\n  // modifiers\n  modifier onlyOwner() {\n    require(msg.sender == owner);\n    _;\n  }\n\n  // constructor\n  function ownable() public {\n    owner = msg.sender;\n  }\n}\n",
-  "sourcePath": "/Users/fellow/blockchain/EminenceAlignment/client/contracts/ownable.sol",
+  "sourcePath": "/Users/Skylar/Developer/Hackital/memoir/client/contracts/ownable.sol",
   "ast": {
-    "absolutePath": "/Users/fellow/blockchain/EminenceAlignment/client/contracts/ownable.sol",
+    "absolutePath": "/Users/Skylar/Developer/Hackital/memoir/client/contracts/ownable.sol",
     "exportedSymbols": {
       "ownable": [
         629
@@ -103,7 +103,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 641,
+                            "referencedDeclaration": 644,
                             "src": "136:3:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -156,8 +156,11 @@
                       "id": 610,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 644,
+                      "overloadedDeclarations": [
+                        647,
+                        648
+                      ],
+                      "referencedDeclaration": 647,
                       "src": "128:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -189,6 +192,7 @@
                 }
               ]
             },
+            "documentation": null,
             "id": 619,
             "name": "onlyOwner",
             "nodeType": "ModifierDefinition",
@@ -238,7 +242,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 641,
+                        "referencedDeclaration": 644,
                         "src": "229:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -271,6 +275,7 @@
                 }
               ]
             },
+            "documentation": null,
             "id": 628,
             "implemented": true,
             "isConstructor": true,
@@ -305,7 +310,7 @@
     "src": "0:247:2"
   },
   "legacyAST": {
-    "absolutePath": "/Users/fellow/blockchain/EminenceAlignment/client/contracts/ownable.sol",
+    "absolutePath": "/Users/Skylar/Developer/Hackital/memoir/client/contracts/ownable.sol",
     "exportedSymbols": {
       "ownable": [
         629
@@ -393,7 +398,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 641,
+                            "referencedDeclaration": 644,
                             "src": "136:3:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -446,8 +451,11 @@
                       "id": 610,
                       "name": "require",
                       "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 644,
+                      "overloadedDeclarations": [
+                        647,
+                        648
+                      ],
+                      "referencedDeclaration": 647,
                       "src": "128:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -479,6 +487,7 @@
                 }
               ]
             },
+            "documentation": null,
             "id": 619,
             "name": "onlyOwner",
             "nodeType": "ModifierDefinition",
@@ -528,7 +537,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 641,
+                        "referencedDeclaration": 644,
                         "src": "229:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -561,6 +570,7 @@
                 }
               ]
             },
+            "documentation": null,
             "id": 628,
             "implemented": true,
             "isConstructor": true,
@@ -596,9 +606,9 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+    "version": "0.4.23+commit.124ca40d.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-04-28T23:14:12.239Z"
+  "updatedAt": "2018-04-28T23:39:03.077Z"
 }
