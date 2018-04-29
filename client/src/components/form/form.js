@@ -116,37 +116,37 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     })
 
 
-    var crypt = new JSEncrypt();
-    crypt.setKey(`-----BEGIN RSA PRIVATE KEY-----
-MIICXQIBAAKBgQDrEgQdf2FEYKRI08Mu5lkPa+0hlBOHsicJ43jviet6rEZ/QQSb
-5k963gzjWZqBuFD7k5pBvm1cFrsc3Wv82cxdfPKtMoX0l1ftUJ29PF453tV7fInj
-Dy6rXyh9l24OsoL2MFwH/zowLKiXOc3Os7DZbiwnB9QbzUjueIhlfKI78wIDAQAB
-AoGAb3JQLyf4FnH3EWwMaozdBnm1qCjLBZeJ+J828+IgmT1aAvTxWXRclDT4SUVv
-Ajc/dbap+Kdus603Mt0rWGpt/7AgnYzg12hbm5pwrPsC7nPlKrax5WTcucSNl6ky
-8zOZeX2OvibQrZYKKW28ccd1COy2MJ+NghYKCEfNhjqSVaECQQD4PArKcYdSc03E
-hArNOWql7POZeU4Diiago4+jgS2yUVfpo20fgFX3e+ZifYMJVFU8706izl9qVnuA
-HJQofedjAkEA8myM22RvbzOBbsAEpbzHDwX9OPQOsODypP/ffI0DOMqgqlS/ky9u
-PEMp17wiVqcYK5v/OmIspBoE8g/mpqLmMQJBAKtMe8HR8CkUioDnAbE3QwI3bq7l
-B9HnftpxpEiXdxpLidgfv8jyPeCnrocex9MjUCLZnTE6KpvuDBGPJyp+H7MCQQDD
-j5XBli/ewOn08anOGY9rKyWvQBJp1c1oFZGv5AFpWuxo+5zfmy+OJZAnnHkG9hyl
-cV5fNrtUVjkPHIyweFDBAkAOFZstgeG8ihk4FVisXvkGn3EMWPxku/OQK2iXPZ8b
-MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
------END RSA PRIVATE KEY-----`); //You can use also setPrivateKey and setPublicKey, they are both alias to setKey
+//     var crypt = new JSEncrypt();
+//     crypt.setKey(`-----BEGIN RSA PRIVATE KEY-----
+// MIICXQIBAAKBgQDrEgQdf2FEYKRI08Mu5lkPa+0hlBOHsicJ43jviet6rEZ/QQSb
+// 5k963gzjWZqBuFD7k5pBvm1cFrsc3Wv82cxdfPKtMoX0l1ftUJ29PF453tV7fInj
+// Dy6rXyh9l24OsoL2MFwH/zowLKiXOc3Os7DZbiwnB9QbzUjueIhlfKI78wIDAQAB
+// AoGAb3JQLyf4FnH3EWwMaozdBnm1qCjLBZeJ+J828+IgmT1aAvTxWXRclDT4SUVv
+// Ajc/dbap+Kdus603Mt0rWGpt/7AgnYzg12hbm5pwrPsC7nPlKrax5WTcucSNl6ky
+// 8zOZeX2OvibQrZYKKW28ccd1COy2MJ+NghYKCEfNhjqSVaECQQD4PArKcYdSc03E
+// hArNOWql7POZeU4Diiago4+jgS2yUVfpo20fgFX3e+ZifYMJVFU8706izl9qVnuA
+// HJQofedjAkEA8myM22RvbzOBbsAEpbzHDwX9OPQOsODypP/ffI0DOMqgqlS/ky9u
+// PEMp17wiVqcYK5v/OmIspBoE8g/mpqLmMQJBAKtMe8HR8CkUioDnAbE3QwI3bq7l
+// B9HnftpxpEiXdxpLidgfv8jyPeCnrocex9MjUCLZnTE6KpvuDBGPJyp+H7MCQQDD
+// j5XBli/ewOn08anOGY9rKyWvQBJp1c1oFZGv5AFpWuxo+5zfmy+OJZAnnHkG9hyl
+// cV5fNrtUVjkPHIyweFDBAkAOFZstgeG8ihk4FVisXvkGn3EMWPxku/OQK2iXPZ8b
+// MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
+// -----END RSA PRIVATE KEY-----`); //You can use also setPrivateKey and setPublicKey, they are both alias to setKey
 
-    //Eventhough the methods are called setPublicKey and setPrivateKey, remember
-    //that they are only alias to setKey, so you can pass them both a private or
-    //a public openssl key, just remember that setting a public key allows you to only encrypt.
+//     //Eventhough the methods are called setPublicKey and setPrivateKey, remember
+//     //that they are only alias to setKey, so you can pass them both a private or
+//     //a public openssl key, just remember that setting a public key allows you to only encrypt.
 
-    var text = 'jQpFYY30t2kH0GWEPvvIHB8wB1QQIBDxbZNdte3vfYnlet/To4Jfw3JAka4HyKiz/Ivp6kJI7OQdXeS4A0kmYDfriZVeCIxNZFElI9BT4iOVfoIP+qcyrsC3hg1D/gzjfNXcn81JTEu7fQRT/4W6pQZHB9rdwvjCDtEgSgYfY8g=';
-    var text1 = '54LxKlrUpyT2v9oDKfzF/+LOTm7BL2dae/5ZmwSEk0TNFRptUxR6Qekmv4HtL6xsCWyJKvmKUQ/z9VFTFvfE3RyfOXARWv+lQR8158y9CVPT0wHxxSMcbPNrDsm82EIjLUm3khIRuU440jBqkk/0yh3RIKoxJ0CKNGhOq4ocQJc=';
+//     var text = 'jQpFYY30t2kH0GWEPvvIHB8wB1QQIBDxbZNdte3vfYnlet/To4Jfw3JAka4HyKiz/Ivp6kJI7OQdXeS4A0kmYDfriZVeCIxNZFElI9BT4iOVfoIP+qcyrsC3hg1D/gzjfNXcn81JTEu7fQRT/4W6pQZHB9rdwvjCDtEgSgYfY8g=';
+//     var text1 = '54LxKlrUpyT2v9oDKfzF/+LOTm7BL2dae/5ZmwSEk0TNFRptUxR6Qekmv4HtL6xsCWyJKvmKUQ/z9VFTFvfE3RyfOXARWv+lQR8158y9CVPT0wHxxSMcbPNrDsm82EIjLUm3khIRuU440jBqkk/0yh3RIKoxJ0CKNGhOq4ocQJc=';
 
-    // Encrypt the data with the public key.
-    // var enc = crypt.encrypt(text);
-    // Now decrypt the crypted text with the private key.
-    var dec = crypt.decrypt(text);
-    console.log(dec);
-    var dec2= crypt.decrypt(text1);
-    console.log(dec2);
+//     // Encrypt the data with the public key.
+//     // var enc = crypt.encrypt(text);
+//     // Now decrypt the crypted text with the private key.
+//     var dec = crypt.decrypt(text);
+//     console.log(dec);
+//     var dec2= crypt.decrypt(text1);
+//     console.log(dec2);
 
   }
 

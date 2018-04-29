@@ -82,12 +82,14 @@ class Personal extends Component {
               idsProcessed++;
               var entryData = {
                 "id" : entry[0].toNumber(),
-                "unlockTime" : entry[1].toNumber(),
+                "unlockTime" : entry[1].c[0],
                 "owner" : entry[2],
                 "ipfs" : entry[3],
                 "title" : entry[4],
                 "descrip" : entry[5],
-                "type": "SAMPLE",
+                "type": entry[6].c[0],
+                "pubKey": entry[7],
+                "isReleased": entry[8],
               };
               entryObjects.push(entryData);
               // If we have looped through all Entries, set state

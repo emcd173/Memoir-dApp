@@ -29,6 +29,7 @@ class Home extends Component {
     };
 
     this.newEntry = this.newEntry.bind(this);
+    this.loadAllEntries = this.loadAllEntries.bind(this);
   };
 
   componentWillMount() {
@@ -79,7 +80,7 @@ class Home extends Component {
       // Loop through each ID, get that entry from backend, se info in readable format on front-end, add each entry info to entryObjects array
       entryIdList.forEach( (entryId, index) => {
           this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
-            console.log("entry",entry);
+            console.log("entry: ",entry);
               idsProcessed++;
               var entryData = {
                 "id" : entry[0].toNumber(),
@@ -89,6 +90,8 @@ class Home extends Component {
                 "title" : entry[4],
                 "descrip" : entry[5],
                 "type": entry[6].c[0],
+                "pubKey": entry[7],
+                "isReleased": entry[8],
               };
               entryObjects.push(entryData);
               // If we have looped through all Entries, set state
@@ -159,7 +162,11 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <CenteredTab entryResults={this.state.entryResults}/>
+        <CenteredTab entryResults={this.state.entryResults}
+          amsterdamContractInstance={this.state.amsterdamContractInstance}
+          loadAllEntries={this.state.loadAllEntries}
+          account={this.state.account}
+        />
       </div>
     );
   }
