@@ -11,7 +11,7 @@ By creating a decentralized time-capsule protocol that deterministically locks a
 
 Memoir represents a unique and novel approach to the timelocking secrets - of all digital types.  We built the protocol after recognizing the social need for reliable methods to programatically enable trustless digital time-capsules.  
 
-In addition, we realized the potential for creating economic value by removing the costs associated with third-party custodians, the elimination of risk derived from the possibility of default, and the reduction in time taken to complete the process.
+In addition, we realized the potential for creating economic value by removing the costs associated with third-party custodians, the <i>elimination of risk</i> derived from the possibility of default, and the reduction in time taken to complete the process.
 
 
 ## How it works
@@ -95,7 +95,9 @@ There are some issues with storing a decryption key on a publically distributed 
 
 Thus, in this beta build, we assume that there exists a deterring level of economic infeasability (resulting from a computational work threshold) in deriving both the key and address from the EVM bytecode.
 
-Importantly, we are also considering implementing alternative approaches to key storage in future builds.  For instance, we would like to ecplore the possibillity of security gains derivied from implementing a Diffie-Hellman key exhange mechanism or a rotating key tumble algorithm.  Ultimately, we found that it would be beneficial to leveraging private channels in Quorum v2.0.2 - or by leveraging Trusted Execution Environments (TEE's) like Intel SGX through Microsoft's open-sourced Coco Framework ([Link.](https://github.com/azure/coco-framework)).  
+Importantly, we are also considering implementing alternative approaches to key storage in future builds.  For instance, we would like to xpplore the possibillity of security gains derivied from implementing a Diffie-Hellman key exhange mechanism or a rotating key tumble algorithm.  
+
+Ultimately, we found that there would be tangible benefits in implementing private channels in Quorum v2.0.2 - or by leveraging Trusted Execution Environments (TEE's) like Intel SGX through Microsoft's open-sourced Coco Framework ([Link.](https://github.com/azure/coco-framework)).  
 
 
 
