@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 // import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import imagesLoaded from 'imagesloaded'
+// import imagesLoaded from 'imagesloaded'
 
 // Import Scenes
 
@@ -67,6 +67,7 @@ class entryList extends Component {
 
   render() {
     // Dyanmically generate each table row based on data received from api
+    console.log(this.props.entryResults);
     const entryListTable = this.props.entryResults.map((entry) => {
       return (
             <div className="entryItem">

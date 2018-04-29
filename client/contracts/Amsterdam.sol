@@ -48,7 +48,7 @@ event EventDecMsg(
   }
 
 // add an entry to the blockchain
-function appendEntry(uint _unlockTime, string _ipfs, string _title, string _description, uint _entryType, uint p, uint q) public {
+function appendEntry(uint _unlockTime, string _ipfs, string _title, string _description, uint _entryType) public {
   // a new entry
   counter++;
   // generate psdeudo random large primes
@@ -183,4 +183,3 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
 
 
 }
-
