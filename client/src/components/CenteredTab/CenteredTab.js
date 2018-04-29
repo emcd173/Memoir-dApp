@@ -70,7 +70,7 @@ class CenteredTabs extends React.Component {
           <Tab label="The Vault" />
         </Tabs>
       </Paper>
-      <EntryList entryResults={this.props.entryResults}
+      <EntryList entryResults={this.state.filteredEntryResults}
         amsterdamContractInstance={this.props.amsterdamContractInstance}
         loadAllEntries={this.props.loadAllEntries}
         account={this.props.account}

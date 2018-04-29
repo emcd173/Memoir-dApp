@@ -126,6 +126,15 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
               return (this.length > n) ? this.substr(0, n-1) + '' : this;
           };
 
+    const check = this.props.type;
+    let type;
+    if(check==1){
+      type = "Image";
+    } else if(check==2){
+      type="Text"
+    } else {
+      type="Video"
+    }
     const { classes } = this.props;
     return (
       <div>
