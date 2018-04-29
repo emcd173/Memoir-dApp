@@ -28,46 +28,9 @@ class entryList extends Component {
     };
 	}
 
-
-  // resizeGridItem(item){
-  //    var grid = document.getElementsByClassName("grid")[0];
-  //    var rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
-  //    var rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-  //    var rowSpan = Math.ceil((item.querySelector('.content').getBoundingClientRect().height+rowGap)/(rowHeight+rowGap));
-  //    item.style.gridRowEnd = "span "+rowSpan;
-  // }
-
-  // resizeAllGridItems(){
-  //    var allItems = document.getElementsByClassName("entryItem");
-  //    for(var x=0; x<allItems.length;x++){
-  //       this.resizeGridItem(allItems[x]);
-  //    }
-  // }
-
-  // resizeInstance(instance){
-  //    var item = instance.elements[0];
-  //    this.resizeGridItem(item);
-  // }
-
-  // componentDidUpdate(){
-
-  // }
-
-  // setGrid() {
-  //   //wait for a paint to do scrolly stuff
-  //   window.requestAnimationFrame(function() {
-  //     this.resizeAllGridItems();
-  //     window.addEventListener("resize", this.resizeAllGridItems);
-  //     var allItems = document.getElementsByClassName("entryItem");
-  //     for(var x=0;x<allItems.length;x++){
-  //        imagesLoaded( allItems[x], () => this.resizeInstance);
-  //     }
-  //   });
-  // }
-
   render() {
     // Dyanmically generate each table row based on data received from api
-    console.log(this.props.entryResults);
+    // console.log(this.props.entryResults);
     const entryListTable = this.props.entryResults.map((entry) => {
       return (
             <div className="entryItem" key={entry.id}>
@@ -86,15 +49,6 @@ class entryList extends Component {
               </div>
             </div>)
     });
-
-    // window.onload = this.resizeAllGridItems();
-    // window.addEventListener("resize", this.resizeAllGridItems);
-    // var allItems = document.getElementsByClassName("entryItem");
-    // for(var x=0;x<allItems.length;x++){
-    //    imagesLoaded( allItems[x], this.resizeInstance);
-    // }
-
-
 
     return (
       <div className="grid">

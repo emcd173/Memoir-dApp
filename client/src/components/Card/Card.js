@@ -84,19 +84,29 @@ class SimpleCard extends React.Component {
             <Card className={classes.card}>
               <CardContent>
                 <Typography className={classes.title} color="textSecondary">
+                  <div className="owner">
                   {this.props.owner}
+                  </div>
                 </Typography>
                 <Typography variant="headline" component="h2">
+                <div className="title">
                   {this.props.title}
+                </div>
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
+                <div className="type">
                   {this.props.type}
+                </div>
                 </Typography>
                 <Typography component="p">
+                <div className="desc">
                   {this.props.desc}
+                </div>
                 </Typography>
                 <Typography component="p">
+                <div className="ipfs">
                   {this.props.ipfs}
+                </div>
                 </Typography>
               </CardContent>
               <CardActions>

@@ -20,6 +20,9 @@ class CenteredTabs extends React.Component {
         value: 0,
         filteredEntryResults: this.props.entryResults.filter(entry => entry.unlockTime < Date.now()),
       };
+
+      this.handleChange = this.handleChange.bind(this)
+
     }
 
     // componentWillMount(){
@@ -67,7 +70,7 @@ class CenteredTabs extends React.Component {
           <Tab label="The Vault" />
         </Tabs>
       </Paper>
-      <EntryList entryResults={this.state.filteredEntryResults}
+      <EntryList entryResults={this.props.entryResults}
         amsterdamContractInstance={this.props.amsterdamContractInstance}
         loadAllEntries={this.props.loadAllEntries}
         account={this.props.account}

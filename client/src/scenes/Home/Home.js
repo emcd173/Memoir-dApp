@@ -29,7 +29,7 @@ class Home extends Component {
     };
 
     this.newEntry = this.newEntry.bind(this);
-    this.loadAllEntries = this.loadAllEntries.bind(this)
+    this.loadAllEntries = this.loadAllEntries.bind(this);
   };
 
   componentWillMount() {
@@ -47,7 +47,7 @@ class Home extends Component {
        })
       })
 
-      this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
+      this.state.amsterdamContractInstance.getTotalEntries.call().then((result) => {
          console.log("Total Number of Entries: ", result.toNumber() );
          this.setState({
              totalEntries: result.toNumber(),
@@ -64,7 +64,7 @@ class Home extends Component {
   // We want to load all Entries. Currently no backend function that returns all entry ids for all Entries on blockchain
   // ASSUMPTION for this function: there will always be a entry for every ID in 1...n; n = total number of Entries
   loadAllEntries(){
-    this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
+    this.state.amsterdamContractInstance.getTotalEntries.call().then((result) => {
       this.setState({
           totalEntries: result.toNumber(),
       }); 
@@ -80,7 +80,7 @@ class Home extends Component {
       // Loop through each ID, get that entry from backend, se info in readable format on front-end, add each entry info to entryObjects array
       entryIdList.forEach( (entryId, index) => {
           this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
-            console.log("entry",entry);
+            console.log("entry: ",entry);
               idsProcessed++;
               var entryData = {
                 "id" : entry[0].toNumber(),
@@ -90,6 +90,8 @@ class Home extends Component {
                 "title" : entry[4],
                 "descrip" : entry[5],
                 "type": entry[6].c[0],
+                "pubKey": entry[7],
+                "isReleased": entry[8],
               };
               entryObjects.push(entryData);
               // If we have looped through all Entries, set state
@@ -160,7 +162,11 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <CenteredTab entryResults={this.state.entryResults}/>
+        <CenteredTab entryResults={this.state.entryResults}
+          amsterdamContractInstance={this.state.amsterdamContractInstance}
+          loadAllEntries={this.state.loadAllEntries}
+          account={this.state.account}
+        />
       </div>
     );
   }
