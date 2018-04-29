@@ -43,7 +43,8 @@ const styles = theme => ({
     flexWrap: 'wrap'
   },
   abc: {
-    width: "97%"
+    width: "97%",
+    justifyContent:"flex-end"
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -339,19 +340,35 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                     />
                   </div>
                   <div className="input-group">
-                  <FormControl className={this.props.classes.formControl}>
+                  {/* <FormControl className={this.props.classes.formControl}>
                     <InputLabel htmlFor="category">Category</InputLabel>
                     <Select
-            value={this.state.category}
-            onChange={event => this.handleCatChange}
-            input={<Input name="category" id="category" />}
-          >
-                      <MenuItem value={2}></MenuItem>
-                      <MenuItem value={3}>Image</MenuItem>
+                    value={this.state.category}
+                    onChange={event => this.handleCatChange}
+                    input={<Input name="category" id="category" />}
+                    > 
+
+                      <MenuItem value={2}>Image</MenuItem>
                       <MenuItem value={1}>Video</MenuItem>
                       <MenuItem value={4}>Text</MenuItem>
                     </Select> 
-                    </FormControl>
+                    </FormControl> */}
+        <FormControl className={this.props.classes.formControl}>
+
+                          <InputLabel htmlFor="age-simple">Category</InputLabel>
+          <Select
+            value={this.state.category}
+            onChange={this.handleCatChange}
+            inputProps={{
+              name: 'category',
+              id: 'category',
+            }}
+          >
+              <MenuItem value={2}>Text</MenuItem>
+            <MenuItem value={1}>Image</MenuItem>
+            <MenuItem value={3}>Video</MenuItem>
+          </Select>
+        </FormControl>
                   </div>
                 </div>
                 <input type="file" id="myFile" onChange={this.captureFile}/>
