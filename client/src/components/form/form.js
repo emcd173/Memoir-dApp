@@ -302,7 +302,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
       this.state.amsterdamContractInstance.EventPubKey({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
           // This is called after metamask initiates transaction
           // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
-        // if (event['transactionHash'] === this.state.transactionHash){
+        if (event['transactionHash'] === this.state.transactionHash){
           console.log("Pub Key Event: ", event);
           this.setState({
               waitingConfirmation: false,
@@ -310,7 +310,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
           });
           
           this.sendFileToIpfs()
-        // }
+        }
       })
   }
 
