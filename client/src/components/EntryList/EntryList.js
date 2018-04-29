@@ -41,6 +41,7 @@ class entryList extends Component {
                desc={entry.descrip}
                unlockTime={entry.unlockTime} 
                type={entry.type}
+               isReleased={entry.id % 3 ? true : false}
                id={entry.id}
                amsterdamContractInstance={this.props.amsterdamContractInstance}
                loadAllEntries={this.props.loadAllEntries}
