@@ -25,7 +25,6 @@ const styles = {
 
 function SimpleCard(props) {
   const { classes } = props;
-
   return (
     <div>
       <Card className={classes.card}>
@@ -47,11 +46,11 @@ function SimpleCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">{props.countdown}</Button>
+          {/* <Button size="small">{props.countdown}</Button> */}
         </CardActions>
-       <Button variant="raised" component="span" className={classes.button}>
+       {/* <Button variant="raised" component="span" className={classes.button}>
          Upload
-       </Button> 
+       </Button>  */}
       </Card>
     </div>
   );

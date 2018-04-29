@@ -22,7 +22,9 @@ class entryList extends Component {
       type: "",
       description: "",
       countdown: "",
-	  };
+    };
+    
+    
 	}
 
   render() {

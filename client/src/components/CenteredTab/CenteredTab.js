@@ -16,10 +16,13 @@ class CenteredTabs extends React.Component {
     constructor(props) {
       super(props);
 
+
       this.state = {
         value: 0,
         filteredEntryResults: this.props.entryResults.filter(entry => entry.unlockTime < Date.now()),
       };
+
+
     }
 
     // componentWillMount(){
@@ -30,8 +33,8 @@ class CenteredTabs extends React.Component {
     //   });
     // }
 
+
   handleChange = (event, value) => {
-    console.log("CHANGE: ", value);
     this.setState({
       value: value,
       filteredEntryResults: this.filterResults(value),
@@ -39,6 +42,7 @@ class CenteredTabs extends React.Component {
   };
 
   filterResults = (value) => {
+
     // filter based on time
     // 0 is released
     // 1 is available to be release but not yet released
