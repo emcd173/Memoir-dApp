@@ -26,8 +26,6 @@ class entryList extends Component {
       description: "",
       countdown: "",
     };
-    
-    
 	}
 
 
@@ -72,14 +70,17 @@ class entryList extends Component {
     const entryListTable = this.props.entryResults.map((entry) => {
       return (
             <div className="entryItem">
-              <div className="content" key={entry.id}
->
+              <div className="content" key={entry.id}>
               <Card
                title={entry.title}
                ipfs={entry.ipfs}
                descrip={entry.descrip}
                unlockTime={entry.unlockTime} 
                type={entry.type}
+               id={entry.id}
+               amsterdamContractInstance={this.props.amsterdamContractInstance}
+               loadAllEntries={this.props.loadAllEntries}
+               account={this.props.account}
               />
               </div>
             </div>)
