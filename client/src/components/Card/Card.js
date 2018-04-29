@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-class SimpleCard extends React.Component  {
+class SimpleCard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -32,6 +32,7 @@ class SimpleCard extends React.Component  {
     };
 
     this.requestUnlock = this.requestUnlock.bind(this)
+    this.listenToEntryUnlockedEvent();
   }
 
   requestUnlock = () => {
@@ -62,11 +63,11 @@ class SimpleCard extends React.Component  {
 
   // Listen for events raised from the contract
   listenToEntryUnlockedEvent() {
-      this.state.amsterdamContractInstance.EvtRelease({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
+      this.props.amsterdamContractInstance.EvtRelease({}, {fromBlock: 0,toBlock: 'latest'}).watch((error, event) => {
           // This is called after metamask initiates transaction
           // We take the transaction ID that metamask initiated compare it to that of the new log event to ensure it matches our transaction
         if (event['transactionHash'] === this.state.transactionHash){
-          event['args']._key.toNumber();
+          // event['args']._key.toNumber();
           console.log("Event: ", event);
           this.setState({
               waitingConfirmation: false,

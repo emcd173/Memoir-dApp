@@ -69,8 +69,8 @@ class entryList extends Component {
     // Dyanmically generate each table row based on data received from api
     const entryListTable = this.props.entryResults.map((entry) => {
       return (
-            <div className="entryItem">
-              <div className="content" key={entry.id}>
+            <div className="entryItem" key={entry.id}>
+              <div className="content">
               <Card
                title={entry.title}
                ipfs={entry.ipfs}

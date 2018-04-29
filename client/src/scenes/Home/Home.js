@@ -29,6 +29,7 @@ class Home extends Component {
     };
 
     this.newEntry = this.newEntry.bind(this);
+    this.loadAllEntries = this.loadAllEntries.bind(this)
   };
 
   componentWillMount() {
