@@ -42,6 +42,10 @@ const styles = theme => ({
     width: '100%',
     flexWrap: 'wrap'
   },
+  abc: {
+    width: "97%",
+    justifyContent:"flex-end"
+  },
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 120,
@@ -286,8 +290,15 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
             <form className={this.props.classes.container} noValidate autoComplete="off">
               <DialogTitle id="responsive-dialog-title">{"Make your memoir"}</DialogTitle>
               <DialogContent className={this.props.classes.form}>
-                <DialogContentText>
-                <blockquote>“Tell the truth, or someone will tell it for you.”</blockquote> ― Stephanie Klein, Straight Up and Dirty
+                <DialogContentText className="quote1">
+                  <div>
+                    <div className="quote">
+                      <blockquote>“When I write I can shake off all my cares.”</blockquote>
+                    </div>
+                    <div className="quote">
+                        Anne Frank
+                    </div>
+                  </div>
                 </DialogContentText>
                 <div className="form-body">
                   <div className="input-group">
@@ -307,7 +318,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                       id="multiline-flexible"
                       label="Description"
                       multiline
-                      rows="3"
+                      rows="1"
                       name="description"
                       value={this.state.description}
                       onChange={this.handleChange('description')}
@@ -317,11 +328,11 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                   </div>
                   <div className="input-group">
                   <TextField
-        id="date"
-        name="date"
+                      id="date"
+                      name="date"
                       label="Release Date"
                       type="date"
-                      defaultValue="2018-04-29"
+                      // defaultValue="2018-04-29"
                       className={this.props.classes.textField}
                       InputLabelProps={{
                         shrink: true,
@@ -329,21 +340,40 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                     />
                   </div>
                   <div className="input-group">
+                  {/* <FormControl className={this.props.classes.formControl}>
                     <InputLabel htmlFor="category">Category</InputLabel>
                     <Select
-            value={this.state.category}
-            onChange={event => this.handleCatChange}
-            input={<Input name="category" id="category" />}
-          >
-                      <MenuItem value={2}>Nudes of myself</MenuItem>
-                      <MenuItem value={3}>Nudes of other people</MenuItem>
-                      <MenuItem value={1}>Nudes of people I don't know</MenuItem>
+                    value={this.state.category}
+                    onChange={event => this.handleCatChange}
+                    input={<Input name="category" id="category" />}
+                    > 
+
+                      <MenuItem value={2}>Image</MenuItem>
+                      <MenuItem value={1}>Video</MenuItem>
+                      <MenuItem value={4}>Text</MenuItem>
                     </Select> 
+                    </FormControl> */}
+        <FormControl className={this.props.classes.formControl}>
+
+                          <InputLabel htmlFor="age-simple">Category</InputLabel>
+          <Select
+            value={this.state.category}
+            onChange={this.handleCatChange}
+            inputProps={{
+              name: 'category',
+              id: 'category',
+            }}
+          >
+              <MenuItem value={2}>Text</MenuItem>
+            <MenuItem value={1}>Image</MenuItem>
+            <MenuItem value={3}>Video</MenuItem>
+          </Select>
+        </FormControl>
                   </div>
                 </div>
                 <input type="file" id="myFile" onChange={this.captureFile}/>
               </DialogContent>
-              <DialogActions>
+              <DialogActions className={this.props.classes.abc}>
                 <Button onClick={this.handleClose} color="primary">
                   Cancel
                 </Button>

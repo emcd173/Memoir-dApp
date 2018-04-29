@@ -46,7 +46,7 @@ class Home extends Component {
        })
       })
 
-      this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
+      this.state.amsterdamContractInstance.getTotalEntries.call().then((result) => {
          console.log("Total Number of Entries: ", result.toNumber() );
          this.setState({
              totalEntries: result.toNumber(),
@@ -63,7 +63,7 @@ class Home extends Component {
   // We want to load all Entries. Currently no backend function that returns all entry ids for all Entries on blockchain
   // ASSUMPTION for this function: there will always be a entry for every ID in 1...n; n = total number of Entries
   loadAllEntries(){
-    this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
+    this.state.amsterdamContractInstance.getTotalEntries.call().then((result) => {
       this.setState({
           totalEntries: result.toNumber(),
       }); 
