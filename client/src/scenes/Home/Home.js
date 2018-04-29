@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 // import EntryList from '../../components/EntryList/EntryList';
 import CenteredTab from '../../components/CenteredTab/CenteredTab';
 
-
 // Import Components
 
 // Import Styles
@@ -28,11 +27,12 @@ class Home extends Component {
     this.state = {
       entryResults: [],
     };
+
+    this.newEntry = this.newEntry.bind(this);
   };
 
   componentWillMount() {
     getWeb3Service().then(() => {
-      console.log("Got web3");
       this.setState({
        web3: getWeb3Object(),
        amsterdamContractInstance: getAmsterdamContractInstance(),
@@ -54,9 +54,8 @@ class Home extends Component {
          // Load and show all Entries 
          this.loadAllEntries();
          this.listenToAppendEntryEvent();
-         this.newEntry();
+        //  this.newEntry();
       }).catch((error) => {
-        console.log(error);
       });
     })
   }
@@ -64,6 +63,11 @@ class Home extends Component {
   // We want to load all Entries. Currently no backend function that returns all entry ids for all Entries on blockchain
   // ASSUMPTION for this function: there will always be a entry for every ID in 1...n; n = total number of Entries
   loadAllEntries(){
+    this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
+      this.setState({
+          totalEntries: result.toNumber(),
+      }); 
+
       var entryObjects = [];
       var idsProcessed = 0;
 
@@ -72,7 +76,43 @@ class Home extends Component {
           entryIdList.push(i);
       }
 
-      // Loop through each ID, get that entry from backend, save info in readable format on front-end, add each entry info to entryObjects array
+      // Loop through each ID, get that entry from backend, se info in readable format on front-end, add each entry info to entryObjects array
+      entryIdList.forEach( (entryId, index) => {
+          this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
+              idsProcessed++;
+              var entryData = {
+                "id" : entry[0].toNumber(),
+                "unlockTime" : entry[1].toNumber(),
+                "owner" : entry[2],
+                "ipfs" : entry[3],
+                "title" : entry[4],
+                "descrip" : entry[5],
+                "type": "SAMPLE",
+              };
+              entryObjects.push(entryData);
+              // If we have looped through all Entries, set state
+              // Need to refactor this to account for async call within for loop. For loop finishes before async call does, so this is a workaround.
+              if (idsProcessed === this.state.totalEntries){
+                this.setState({
+                    entryResults: entryObjects
+                });   
+              };
+
+          });
+      });      
+      // Load and show all Entries 
+   });
+/*
+
+      var entryObjects = [];
+      var idsProcessed = 0;
+
+      var entryIdList = []
+      for (var i = 1; i <= this.state.totalEntries; i++){
+          entryIdList.push(i);
+      }
+
+      // Loop through each ID, get that entry from backend, se info in readable format on front-end, add each entry info to entryObjects array
       entryIdList.forEach( (entryId, index) => {
           this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
               console.log("Entry: ", entry)
@@ -96,7 +136,9 @@ class Home extends Component {
                 });     
               };
           });
-      });
+      });*/
+
+
   }
 
 
@@ -109,8 +151,8 @@ class Home extends Component {
 
     // Get accounts.
     this.state.amsterdamContractInstance.appendEntry(
-      5555,
-      "unlockTime", // unlock time
+     10,
+      "2019-04-23T18:25:43.511Z", // unlock time
       "ipfs", // title
       "description", // description
       1, //uint _entryType
@@ -122,14 +164,13 @@ class Home extends Component {
     ).then((results) => {
         // Metamask has initiated transaction
         // Now wait for transaction to be added to blockchain
-        console.log("Results: ", results);
         this.setState({
             waitingMetamask: false,
             waitingConfirmation: true,
             transactionHash: results['tx']
         });
+        
     }).catch((err) => {
-        console.log(err);
     })
   }
 
@@ -141,9 +182,11 @@ class Home extends Component {
         if (event['transactionHash'] === this.state.transactionHash){
           console.log("Event: ", event);
           this.setState({
-              waitingConfirmation: false
+              waitingConfirmation: false,
           });
-          this.loadAllEntries()
+
+          this.loadAllEntries();
+          
         }
       })
   }
