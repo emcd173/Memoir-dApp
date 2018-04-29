@@ -51,7 +51,7 @@ event EventEnty(
   uint id
   );
 
-function getKeyPair() public returns(uint[]) {
+function getKeyPair() public {
   // generate psdeudo random large primes
   uint p;
   uint q;
@@ -133,7 +133,7 @@ function appendEntry(uint _unlockTime, string _ipfs, string _title, string _desc
 
   function release(uint _id) public{
     // check if it is time to release
-    require(now >= entries[_id].unlockTime);
+    // require(now >= entries[_id].unlockTime);
     // change isReleased value
     entries[_id].isReleased = true;
     // trigger an event

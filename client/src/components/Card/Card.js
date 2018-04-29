@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Lock';
 
 import './Card.scss'
 
@@ -35,6 +35,7 @@ class SimpleCard extends React.Component {
 
     this.requestUnlock = this.requestUnlock.bind(this)
     this.listenToEntryUnlockedEvent();
+    this.copyToClipboard = this.copyToClipboard.bind(this);
   }
 
   requestUnlock = () => {
@@ -56,7 +57,22 @@ class SimpleCard extends React.Component {
         this.setState({
             waitingMetamask: false,
             waitingConfirmation: true,
-            transactionHash: results['tx']
+            transactionHash: results['tx'],
+            privateKey: `-----BEGIN RSA PRIVATE KEY-----
+MIICXQIBAAKBgQDrEgQdf2FEYKRI08Mu5lkPa+0hlBOHsicJ43jviet6rEZ/QQSb
+5k963gzjWZqBuFD7k5pBvm1cFrsc3Wv82cxdfPKtMoX0l1ftUJ29PF453tV7fInj
+Dy6rXyh9l24OsoL2MFwH/zowLKiXOc3Os7DZbiwnB9QbzUjueIhlfKI78wIDAQAB
+AoGAb3JQLyf4FnH3EWwMaozdBnm1qCjLBZeJ+J828+IgmT1aAvTxWXRclDT4SUVv
+Ajc/dbap+Kdus603Mt0rWGpt/7AgnYzg12hbm5pwrPsC7nPlKrax5WTcucSNl6ky
+8zOZeX2OvibQrZYKKW28ccd1COy2MJ+NghYKCEfNhjqSVaECQQD4PArKcYdSc03E
+hArNOWql7POZeU4Diiago4+jgS2yUVfpo20fgFX3e+ZifYMJVFU8706izl9qVnuA
+HJQofedjAkEA8myM22RvbzOBbsAEpbzHDwX9OPQOsODypP/ffI0DOMqgqlS/ky9u
+PEMp17wiVqcYK5v/OmIspBoE8g/mpqLmMQJBAKtMe8HR8CkUioDnAbE3QwI3bq7l
+B9HnftpxpEiXdxpLidgfv8jyPeCnrocex9MjUCLZnTE6KpvuDBGPJyp+H7MCQQDD
+j5XBli/ewOn08anOGY9rKyWvQBJp1c1oFZGv5AFpWuxo+5zfmy+OJZAnnHkG9hyl
+cV5fNrtUVjkPHIyweFDBAkAOFZstgeG8ihk4FVisXvkGn3EMWPxku/OQK2iXPZ8b
+MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
+-----END RSA PRIVATE KEY-----`
         });
         
     }).catch((err) => {
@@ -73,13 +89,43 @@ class SimpleCard extends React.Component {
           console.log("Event: ", event);
           this.setState({
               waitingConfirmation: false,
+              // privateKey: event['args']._key,
           });
-          this.props.loadAllEntries();
+          // this.props.loadAllEntries();
         }
       })
   }
 
+  copyToClipboard = str => {
+    var string = `-----BEGIN RSA PRIVATE KEY-----
+MIICXQIBAAKBgQDrEgQdf2FEYKRI08Mu5lkPa+0hlBOHsicJ43jviet6rEZ/QQSb
+5k963gzjWZqBuFD7k5pBvm1cFrsc3Wv82cxdfPKtMoX0l1ftUJ29PF453tV7fInj
+Dy6rXyh9l24OsoL2MFwH/zowLKiXOc3Os7DZbiwnB9QbzUjueIhlfKI78wIDAQAB
+AoGAb3JQLyf4FnH3EWwMaozdBnm1qCjLBZeJ+J828+IgmT1aAvTxWXRclDT4SUVv
+Ajc/dbap+Kdus603Mt0rWGpt/7AgnYzg12hbm5pwrPsC7nPlKrax5WTcucSNl6ky
+8zOZeX2OvibQrZYKKW28ccd1COy2MJ+NghYKCEfNhjqSVaECQQD4PArKcYdSc03E
+hArNOWql7POZeU4Diiago4+jgS2yUVfpo20fgFX3e+ZifYMJVFU8706izl9qVnuA
+HJQofedjAkEA8myM22RvbzOBbsAEpbzHDwX9OPQOsODypP/ffI0DOMqgqlS/ky9u
+PEMp17wiVqcYK5v/OmIspBoE8g/mpqLmMQJBAKtMe8HR8CkUioDnAbE3QwI3bq7l
+B9HnftpxpEiXdxpLidgfv8jyPeCnrocex9MjUCLZnTE6KpvuDBGPJyp+H7MCQQDD
+j5XBli/ewOn08anOGY9rKyWvQBJp1c1oFZGv5AFpWuxo+5zfmy+OJZAnnHkG9hyl
+cV5fNrtUVjkPHIyweFDBAkAOFZstgeG8ihk4FVisXvkGn3EMWPxku/OQK2iXPZ8b
+MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
+-----END RSA PRIVATE KEY-----`
+    const el = document.createElement('textarea');
+    el.value = string;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  }
+
   render() {
+    String.prototype.trunc = String.prototype.trunc ||
+          function(n){
+              return (this.length > n) ? this.substr(0, n-1) + '' : this;
+          };
+
     const check = this.props.type;
     let type;
     if(check==1){
@@ -105,8 +151,17 @@ class SimpleCard extends React.Component {
                 </div>
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                <div className="type">
-                  { type }
+                <div className="group">
+                  <div className="type">
+                    {this.props.type}
+                  </div>
+                  <div className="pk">
+                    {this.props.isReleased ? 
+                     <Button href="#flat-buttons" onClick={this.copyToClipboard} className={classes.button}>
+                       Copy Key
+                     </Button>
+                     : "Key Hidden" }
+                   </div>
                 </div>
                 </Typography>
                 <Typography component="p">
@@ -119,7 +174,7 @@ class SimpleCard extends React.Component {
              <div className="bottom">
                <Typography component="p">
                <div className="ipfs">
-                 {this.props.ipfs}
+                 <a target="_blank" href={`https://ipfs.io/ipfs/${this.props.ipfs}`}>ipfs.io/{this.props.ipfs.trunc(15)}...</a>
                </div>
                </Typography>
                <div className="button">

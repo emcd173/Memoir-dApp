@@ -16,3 +16,17 @@
     color: $secondary-regular;
   }
 }
+
+.group{
+  display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.type{
+  display: flex;
+}
+
+.pk{
+  display: flex;
+}

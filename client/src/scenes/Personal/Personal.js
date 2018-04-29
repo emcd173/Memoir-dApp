@@ -46,7 +46,7 @@ class Personal extends Component {
        })
       })
 
-      this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
+      this.state.amsterdamContractInstance.getTotalEntries.call().then((result) => {
          console.log("Total Number of Entries: ", result.toNumber() );
          this.setState({
              totalEntries: result.toNumber(),
@@ -63,7 +63,7 @@ class Personal extends Component {
   // We want to load all Entries. Currently no backend function that returns all entry ids for all Entries on blockchain
   // ASSUMPTION for this function: there will always be a entry for every ID in 1...n; n = total number of Entries
   loadAllEntries(){
-    this.state.amsterdamContractInstance.getTotalentries.call().then((result) => {
+    this.state.amsterdamContractInstance.getTotalEntries.call().then((result) => {
       this.setState({
           totalEntries: result.toNumber(),
       }); 
@@ -79,19 +79,21 @@ class Personal extends Component {
       // Loop through each ID, get that entry from backend, se info in readable format on front-end, add each entry info to entryObjects array
       entryIdList.forEach( (entryId, index) => {
           this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
-              idsProcessed++;
-              var entryData = {
-                "id" : entry[0].toNumber(),
-                "unlockTime" : entry[1].c[0],
-                "owner" : entry[2],
-                "ipfs" : entry[3],
-                "title" : entry[4],
-                "descrip" : entry[5],
-                "type": entry[6].c[0],
-                "pubKey": entry[7],
-                "isReleased": entry[8],
-              };
-              entryObjects.push(entryData);
+              if (entry[2] === this.state.account){
+                idsProcessed++;
+                var entryData = {
+                  "id" : entry[0].toNumber(),
+                  "unlockTime" : entry[1].c[0],
+                  "owner" : entry[2],
+                  "ipfs" : entry[3],
+                  "title" : entry[4],
+                  "descrip" : entry[5],
+                  "type": entry[6].c[0],
+                  "pubKey": entry[7],
+                  "isReleased": entry[8],
+                };
+                entryObjects.push(entryData);
+              }
               // If we have looped through all Entries, set state
               // Need to refactor this to account for async call within for loop. For loop finishes before async call does, so this is a workaround.
               if (idsProcessed === this.state.totalEntries){
@@ -99,13 +101,11 @@ class Personal extends Component {
                     entryResults: entryObjects
                 });   
               };
-
           });
       });      
       // Load and show all Entries 
    });
   }
-
 
   newEntry(){
     // Declaring this for later so we can chain functions.
