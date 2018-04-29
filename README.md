@@ -77,9 +77,9 @@ Below, is an example of the experience for a user uploading a file.
 
 ![UI](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirUIGif.gif)
 
-The Memoir Web Interface divides the timecapsule listings based off of whether or not the key for the encrypted file stored on IPFS has been released.  <b>The Library</b> tab sorts all of the objects which have been released, while <The Vault</b> tab sorts the objects where the key is yet to be unlocked
+The Memoir Web Interface divides the timecapsule listings based off of whether or not the key for the encrypted file stored on IPFS has been released.  <b>The Library</b> tab sorts all of the objects which have been released, while <b>The Vault</b> tab sorts the objects where the key is yet to be unlocked
 
-![UI](example)
+//gif
 
 In future iterations of this project, we envision the possibility of more advanced content curation techniques.  This might include the ability to star or follow specific creators, query based on content description, or upvote/rank locked content (possibly through a content-curated registry schema).
 
