@@ -1,0 +1,88 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Paper from 'material-ui/Paper';
+import Tabs, { Tab } from 'material-ui/Tabs';
+
+import EntryList from '../EntryList/EntryList'
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+};
+
+class CenteredTabs extends React.Component {
+    constructor(props) {
+      super(props);
+
+
+      this.state = {
+        value: 0,
+        filteredEntryResults: this.props.entryResults.filter(entry => entry.unlockTime < Date.now()),
+      };
+
+
+    }
+
+    // componentWillMount(){
+    //   this.filterResults(0).then((filteredResults) => {
+    //     this.setState({
+    //       filteredEntryResults: filteredResults,
+    //     });
+    //   });
+    // }
+
+
+  handleChange = (event, value) => {
+    this.setState({
+      value: value,
+      filteredEntryResults: this.filterResults(value),
+    });
+  };
+
+  filterResults = (value) => {
+
+    // filter based on time
+    // 0 is released
+    // 1 is available to be release but not yet released
+    // 2 is still counting down
+    switch(value) {
+        case 2:
+            return this.props.entryResults.filter(entry => entry.unlockTime > Date.now());
+        case 1:
+            return this.props.entryResults.filter(entry => entry.unlockTime < Date.now());
+        default:
+            return this.props.entryResults.filter(entry => entry.unlockTime < Date.now());
+    }
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div>
+      <Paper className={classes.root}>
+        <Tabs
+          value={this.state.value}
+          onChange={this.handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="Released" />
+          <Tab label="Available" />
+          <Tab label="Upcoming" />
+        </Tabs>
+      </Paper>
+      <EntryList entryResults={this.state.filteredEntryResults}/>
+      </div>
+    );
+  }
+}
+
+CenteredTabs.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CenteredTabs);

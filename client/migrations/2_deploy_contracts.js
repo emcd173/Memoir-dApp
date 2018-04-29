@@ -1,5 +1,5 @@
-var Amersterdam = artifacts.require("./Amersterdam.sol");
+var Amsterdam = artifacts.require("./Amsterdam.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Amersterdam);
-}
+  deployer.deploy(Amsterdam);
+};

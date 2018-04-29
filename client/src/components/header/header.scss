@@ -1,0 +1,32 @@
+.header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100%;
+    background-color: $secondary-dark !important;
+
+    .profile:hover{
+        transition: color 0.5s ease;
+        color: $primary-light;
+    }
+    .logoTitle:hover{
+        transition: color 0.5s ease;
+        color: $primary-light;
+    }
+}
+    
+.header-sub {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 90%;
+}
+.header-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-right > div {
+    padding-right:10px;
+    padding-left: 10px;
+}
