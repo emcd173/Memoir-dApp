@@ -42,6 +42,7 @@ struct PK {
 ```
 To audit the Amsterdam.sol smart-contract, [look here](https://github.com/emcd173/EminenceAlignment/blob/master/client/contracts/Amsterdam.sol)
 
+### Workflow Diagram
 A visual diagram outling the process may be seen below:
 
 ![Diagram](https://github.com/emcd173/EminenceAlignment/blob/master/Diagram2.PNG)
@@ -57,10 +58,14 @@ We envsion a wide array of use cases for Memoir, for example:
 5. <i><b>Programmatic gaming incentives</b></i> - A game developer, looking to maximize the time-horizon for the enjoyment of a game, may wish to time-locked digital assets (possibly represented as an NFT) and programatically release them into the gaming universe over a given period of tume.  This ensures that the game incentives continue to evolve - keeping the game engaging long after the Creator has moved on.
 6. <i><b>Classified Government Disclosures</b></i> - Today, the government may choose to release classified material to the public after a given period of time - such as the JFK Files, etc.  However, the public has no proof that these files haven't been altered, tampeered, with, etc. since they were created.  Memoir creates the underpinnings of a better declassification system for classified government material, allowing the public to verify file consistency since a given point in time.
 
+
 ## Front User Experience and Web Application
 
-lorem ipsum
+The user can take two primary actions on Memoir - first, he can upload a file, and timelock it, following the process shown above.  The user may also view the list of memoirs uploaded by other users, seeing the description, countdown until the key is released, and encrypted file address.  An example of the web UI is shown below, and can be accessed [here](link).
 
+//UI Example
+
+In future iterations of this project, we might envision the possibility of advanced content curation techniques.  This might include the ability to star or follow specific creators, query based on content description, or upvote/rank locked content (possibly through a content-curated registry schema).
 
 ## Addressing Potential Vulnerabilites
 
@@ -77,4 +82,9 @@ Initially, we envisioned a symetric key schema where the web3 uploader encrypts 
 
 A visual diagram outling this first iteration was envisioned as below:
 
-![Memoir Diagram](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirDiagram.PNG)
+![Memoir Diagram](https://github.com/emcd173/EminenceAlignment/blob/master/MemoirDiagram%20(2).PNG)
+
+
+## Conclusion
+
+//in conclusion
