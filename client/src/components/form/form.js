@@ -100,12 +100,17 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     //that they are only alias to setKey, so you can pass them both a private or
     //a public openssl key, just remember that setting a public key allows you to only encrypt.
 
-    var text = '30CCX6KODrRFCODMpBtUCKJdyRmBX/XIWvFowJVmmEMsue0E66Hz2gbctJ4n3ptLF3JVeDgC0MfX6Zf6i9SE0jX6cqQMDY4/s4sR4BRvqXFbhqM+V3btnXO7hmiC4jHRiDmCPiifphUWfuP3WEKcrau1nnDm3/OdU0lQmP+4v48=';
+    var text = 'jQpFYY30t2kH0GWEPvvIHB8wB1QQIBDxbZNdte3vfYnlet/To4Jfw3JAka4HyKiz/Ivp6kJI7OQdXeS4A0kmYDfriZVeCIxNZFElI9BT4iOVfoIP+qcyrsC3hg1D/gzjfNXcn81JTEu7fQRT/4W6pQZHB9rdwvjCDtEgSgYfY8g=';
+    var text1 = '54LxKlrUpyT2v9oDKfzF/+LOTm7BL2dae/5ZmwSEk0TNFRptUxR6Qekmv4HtL6xsCWyJKvmKUQ/z9VFTFvfE3RyfOXARWv+lQR8158y9CVPT0wHxxSMcbPNrDsm82EIjLUm3khIRuU440jBqkk/0yh3RIKoxJ0CKNGhOq4ocQJc=';
+
     // Encrypt the data with the public key.
     // var enc = crypt.encrypt(text);
     // Now decrypt the crypted text with the private key.
     var dec = crypt.decrypt(text);
     console.log(dec);
+    var dec2= crypt.decrypt(text1);
+    console.log(dec2);
+
 
     // // Now a simple check to see if the round-trip worked.
     // if (dec === text){
@@ -142,7 +147,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
       .then((response) => {
         console.log(response)
         ipfsId = response[0].hash
-        console.log(ipfsId)
+        console.log("https://ipfs.io/ipfs/" + ipfsId)
         this.setState({added_file_hash: ipfsId})
       }).catch((err) => {
         console.error(err)
@@ -162,7 +167,7 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
 
   handleSubmit = (event) => {
     event.preventDefault();
-    var encryptBlob = new File([this.state.encText], this.state.filename, {type: "text/plain", lastModified: new Date()});
+    var encryptBlob = new File([this.state.encText], this.state.filename, {type: "text/plain"});
     let reader = new window.FileReader()
     reader.onloadend = () => this.saveToIpfs(reader)
     reader.readAsArrayBuffer(encryptBlob);
