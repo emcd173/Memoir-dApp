@@ -3,7 +3,17 @@ import Button from 'material-ui/Button';
 import FileUpload from '@material-ui/icons/FileUpload';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Input, { InputLabel } from 'material-ui/Input';
+import { MenuItem } from 'material-ui/Menu';
 import TextField from 'material-ui/TextField';
+// Import Services
+import {
+  getWeb3Service,
+  getWeb3Object,
+  getAmsterdamContractInstance,
+  getCurrentAccount
+} from '../../services/providerService';
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -11,6 +21,8 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 import './form.scss';
+import Select from 'material-ui/Select';
+
 
 const styles = theme => ({
   container: {
@@ -29,25 +41,26 @@ const styles = theme => ({
     display: 'flex',
     width: '100%',
     flexWrap: 'wrap'
-  }
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+  },
 });
 
 const ipfsApi = window.IpfsApi('ipfs.infura.io', '5001', {protocol: 'https'})
 const JSEncrypt = window.JSEncrypt;
-// var encrypted = CryptoJS.AES(...);
-// var encrypted = CryptoJS.SHA256(...);
 
 console.log(window);
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
-console.log("test")
     this.state = {
       open: false,
       title: "",
       description: "",
-      category: "",
+      category: 2,
       author: "",
       added_file_hash: undefined,
       publicKey: 
@@ -75,8 +88,28 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
 -----END RSA PRIVATE KEY-----`,
     }
     // bind methods
+    this.newEntry = this.newEntry.bind(this);
     this.captureFile = this.captureFile.bind(this)
     this.saveToIpfs = this.saveToIpfs.bind(this)
+  }
+
+  componentDidMount() {
+    getWeb3Service().then(() => {
+      this.setState({
+       web3: getWeb3Object(),
+       amsterdamContractInstance: getAmsterdamContractInstance(),
+      });
+
+      var instance = getAmsterdamContractInstance();
+
+
+      getCurrentAccount().then( (accountResult) => {
+       this.setState({
+         account: accountResult,
+       })
+      }) .catch((error) => {
+      });
+    })
 
 
     var crypt = new JSEncrypt();
@@ -111,14 +144,6 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     var dec2= crypt.decrypt(text1);
     console.log(dec2);
 
-
-    // // Now a simple check to see if the round-trip worked.
-    // if (dec === text){
-    //     alert(dec);
-    // } else {
-    //     alert('Something went wrong....');
-    // }
-
   }
 
   captureFile (event) {
@@ -149,9 +174,45 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
         ipfsId = response[0].hash
         console.log("https://ipfs.io/ipfs/" + ipfsId)
         this.setState({added_file_hash: ipfsId})
+         return true;
+      }).then((result)=>{
+        this.newEntry();      
       }).catch((err) => {
         console.error(err)
       })
+  }
+
+  newEntry(){
+    const arr = this.state.endDate.split("-");
+    console.log(arr);
+    let steve_jobs = new Date(arr[0],arr[1],arr[2]);
+    let a = Date.parse(steve_jobs)
+    console.log(a);
+    console.log(steve_jobs);
+    this.setState({
+      ed: a
+    });
+    console.log(this.state);
+    this.state.amsterdamContractInstance.appendEntry(
+      this.state.ed, // unlockTime
+      "ipfs", // ipfs
+      this.state.title, // title
+      this.state.description, // description
+      this.state.category, // entryType
+      [1,2], //uint[] _file
+      1, // uint _rand,
+      {
+          from: this.state.account, 
+      }
+    ).then((results) => {
+        // Metamask has initiated transaction
+        // Now wait for transaction to be added to blockchain
+        this.setState({
+          open: false
+        });
+
+    }).catch((err) => {
+    })
   }
 
   handleClickOpen = () => {
@@ -167,11 +228,21 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
 
   handleSubmit = (event) => {
     event.preventDefault();
+    console.log(this.state);
+    
+    const endDate = document.getElementById('date').value;
+    
+    const title = this.state.title;
+    const des = this.state.description;
+    const cat = this.state.category;
+
+    this.setState({endDate, title, des, cat});
+
     var encryptBlob = new File([this.state.encText], this.state.filename, {type: "text/plain"});
+
     let reader = new window.FileReader()
     reader.onloadend = () => this.saveToIpfs(reader)
     reader.readAsArrayBuffer(encryptBlob);
-    // write hash to block chain with rest of data
   };
 
   encryptWithPublicKey(plainFile){
@@ -187,6 +258,18 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
     decrypt.setPrivateKey(this.state.privateKey);
     return decrypt.decrypt(encryptedFile);
   }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    });
+  }
+
+  handleCatChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+
 
 
   render() {
@@ -206,13 +289,14 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
               <DialogTitle id="responsive-dialog-title">{"Make your memoir"}</DialogTitle>
               <DialogContent className={this.props.classes.form}>
                 <DialogContentText>
-                  Let the world know!
+                <blockquote>“Tell the truth, or someone will tell it for you.”</blockquote> ― Stephanie Klein, Straight Up and Dirty
                 </DialogContentText>
                 <div className="form-body">
                   <div className="input-group">
                     <TextField
                         id="title"
                         label="Title"
+                        name="title"
                         className={this.props.classes.textField}
                         value={this.state.title}
                         onChange={this.handleChange('title')}
@@ -232,6 +316,31 @@ MWDXVvho4PYA5Lt9KK3bKtIFRd9M5DRAzcr8QOCtlZ7T
                       className={this.props.classes.textField}
                       margin="normal"
                     />
+                  </div>
+                  <div className="input-group">
+                  <TextField
+        id="date"
+        name="date"
+                      label="Release Date"
+                      type="date"
+                      defaultValue="2018-04-29"
+                      className={this.props.classes.textField}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </div>
+                  <div className="input-group">
+                    <InputLabel htmlFor="category">Category</InputLabel>
+                    <Select
+            value={this.state.category}
+            onChange={event => this.handleCatChange}
+            input={<Input name="category" id="category" />}
+          >
+                      <MenuItem value={2}>Nudes of myself</MenuItem>
+                      <MenuItem value={3}>Nudes of other people</MenuItem>
+                      <MenuItem value={1}>Nudes of people I don't know</MenuItem>
+                    </Select> 
                   </div>
                 </div>
                 <input type="file" id="myFile" onChange={this.captureFile}/>

@@ -80,15 +80,17 @@ class Home extends Component {
       // Loop through each ID, get that entry from backend, se info in readable format on front-end, add each entry info to entryObjects array
       entryIdList.forEach( (entryId, index) => {
           this.state.amsterdamContractInstance.entries(entryId).then((entry) => {
+            console.log("entry",entry);
+
               idsProcessed++;
               var entryData = {
                 "id" : entry[0].toNumber(),
-                "unlockTime" : entry[1].toNumber(),
+                "unlockTime" : entry[1].c[0],
                 "owner" : entry[2],
                 "ipfs" : entry[3],
                 "title" : entry[4],
                 "descrip" : entry[5],
-                "type": "SAMPLE",
+                "type": entry[6].c[0],
               };
               entryObjects.push(entryData);
               // If we have looped through all Entries, set state
