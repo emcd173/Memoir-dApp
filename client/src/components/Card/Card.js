@@ -78,6 +78,15 @@ class SimpleCard extends React.Component {
   }
 
   render() {
+    const check = this.props.type;
+    let type;
+    if(check==1){
+      type = "Image";
+    } else if(check==2){
+      type="Text"
+    } else {
+      type="Video"
+    }
     const { classes } = this.props;
     return (
       <div>
@@ -95,7 +104,7 @@ class SimpleCard extends React.Component {
                 </Typography>
                 <Typography className={classes.pos} color="textSecondary">
                 <div className="type">
-                  {this.props.type}
+                  { type }
                 </div>
                 </Typography>
                 <Typography component="p">
